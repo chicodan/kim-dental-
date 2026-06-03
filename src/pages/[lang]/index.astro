@@ -1,0 +1,404 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ServiceCard from "../../components/ServiceCard.astro";
+import Testimonial from "../../components/Testimonial.astro";
+import ContactCards from "../../components/ContactCards.astro";
+import * as m from "../../paraglide/messages.js";
+import { LOCALES, type Locale } from "../../i18n/locales";
+import { setLocale } from "../../paraglide/runtime.js";
+import { Image } from "astro:assets";
+import lobby from "../../assets/images/lobby.jpg";
+import roomImage from "../../assets/images/room-horizontal.jpg";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+setLocale(lang);
+
+const testimonials = [
+  { name: m.testimonial_1_name(), text: m.testimonial_1_text() },
+  { name: m.testimonial_2_name(), text: m.testimonial_2_text() },
+  { name: m.testimonial_3_name(), text: m.testimonial_3_text() },
+];
+---
+
+<MainLayout>
+  {/* Hero Section - Family Care Focus */}
+  <section
+    class="relative py-24 md:py-32 overflow-hidden section-breakout -mt-8"
+  >
+    {/* Background Image */}
+    <div class="absolute inset-0 z-0">
+      <Image
+        src={roomImage}
+        alt="Kim Dental office in Paramus"
+        widths={[640, 768, 1024, 1536, 1920]}
+        sizes="100vw"
+        format="webp"
+        quality="high"
+        priority={true}
+        class="w-full h-full object-cover object-center md:object-[center_60%]"
+      />
+      {/* Overlay for readability */}
+      <div class="absolute inset-0 bg-brand-light/65"></div>
+    </div>
+
+    {/* Content */}
+    <div class="max-w-6xl mx-auto px-4 relative z-10">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1
+          class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-brand-purple"
+        >
+          Comprehensive Family Dental Care in Paramus
+        </h1>
+        <p class="text-lg md:text-xl leading-relaxed mb-8 text-ink">
+          Welcome to the office of Dr. Soo B Kim, DDS. For over 20 years, we've
+          been your trusted family dentist in Bergen County, providing gentle
+          care from routine cleanings to advanced procedures.
+        </p>
+        <div
+          class="flex flex-col sm:flex-row gap-4 justify-center items-center"
+        >
+          <a
+            href={`/${lang}/book`}
+            class="bg-accent-teal text-white px-8 py-3 rounded-md font-semibold hover:bg-accent-teal-dark transition text-center w-auto"
+            >{m.book_appointment()}</a
+          >
+          <a
+            href="tel:201-599-1888"
+            class="bg-white text-brand-purple border-2 border-white px-8 py-3 rounded-md font-semibold hover:bg-cream-2 transition text-center w-auto"
+            >Call 201-599-1888</a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Trust Factors Section */}
+  <section class="py-16 bg-white section-breakout">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2
+        class="font-heading text-3xl md:text-4xl font-bold mb-12 text-center text-brand-purple"
+      >
+        Gentle Care. Radiant Results.
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div class="bg-brand-light p-8 rounded-lg">
+          <div class="text-4xl font-bold text-accent-teal mb-2">20+</div>
+          <h3 class="font-heading text-xl font-bold mb-3 text-brand-purple">
+            Years of Trust
+          </h3>
+          <p class="text-ink-weak">
+            Proudly serving Paramus and Bergen County families since 2001.
+          </p>
+        </div>
+        <div class="bg-brand-light p-8 rounded-lg">
+          <div class="text-4xl font-bold text-accent-sage mb-2">500+</div>
+          <h3 class="font-heading text-xl font-bold mb-3 text-brand-purple">
+            Hours of Advanced Training
+          </h3>
+          <p class="text-ink-weak">
+            Specialized expertise in implant surgery and advanced dental
+            procedures.
+          </p>
+        </div>
+        <div class="bg-brand-light p-8 rounded-lg">
+          <h3 class="font-heading text-xl font-bold mb-3 text-brand-purple">
+            Comfort Focused Approach
+          </h3>
+          <p class="text-ink-weak">
+            Every appointment is designed with your comfort and well-being in
+            mind.
+          </p>
+        </div>
+        <div class="bg-brand-light p-8 rounded-lg">
+          <h3 class="font-heading text-xl font-bold mb-3 text-brand-purple">
+            All Major Insurance Accepted
+          </h3>
+          <p class="text-ink-weak">
+            We work with Delta, MetLife, Cigna, and most other insurance plans.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Philosophy Section */}
+  <section class="py-16 bg-brand-light section-breakout">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex flex-col md:flex-row items-center gap-12">
+        <div class="w-full md:w-1/2">
+          <Image
+            src={lobby}
+            alt="Dr. Kim and team"
+            widths={[400, 600, 800, 1200]}
+            sizes="(max-width: 768px) 100vw, 50vw"
+            format="webp"
+            quality="high"
+            loading="lazy"
+            class="rounded-lg shadow-lg w-full md:max-h-[500px] object-cover"
+          />
+        </div>
+        <div class="w-full md:w-1/2">
+          <h2
+            class="font-heading text-3xl md:text-4xl font-bold mb-4 text-brand-purple"
+          >
+            You're <span class="underline decoration-accent-gold decoration-4"
+              >Family</span
+            > Here,<br />
+            Not Just a Patient
+          </h2>
+          <p class="text-gray-700 text-lg leading-relaxed mb-6">
+            Dr. Kim's philosophy is simple: treat every patient with the same
+            kindness, respect, and attention he would give his own loved ones.
+            From the moment you walk through our doors, you'll experience
+            personalized care in a warm, welcoming environment designed for your
+            comfort.
+          </p>
+          <div class="mt-6">
+            <a
+              href={`/${lang}/about`}
+              class="bg-accent-teal text-white px-6 py-3 rounded-md font-semibold hover:bg-accent-teal-dark transition inline-block"
+              >{m.learn_more()}</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Services Section */}
+  <section class="py-16 bg-brand-light section-breakout">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2
+        class="font-heading text-3xl md:text-4xl font-bold mb-12 text-center text-brand-purple"
+      >
+        <a href={`/${lang}/services`}>Our Services</a>
+      </h2>
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+        <ServiceCard
+          title="General Dentistry"
+          description="We believe healthy smiles start with strong foundations. Our general dentistry services focus on keeping your teeth and gums in excellent shape through gentle, preventive care."
+          image="/assets/images/service-general.svg"
+          slug="general-dentistry"
+          accentColor="accent-teal"
+        />
+        <ServiceCard
+          title="Hygiene"
+          description="Professional dental cleanings are an essential part of maintaining strong teeth and healthy gums. Our hygiene team provides gentle, thorough care by removing plaque, tartar, and stains."
+          image="/assets/images/service-cleaning.svg"
+          slug="hygiene"
+          accentColor="accent-sage"
+        />
+        <ServiceCard
+          title="Implants"
+          description="Dental implants are a long-lasting solution for replacing missing teeth and restoring your smile. Designed to look, feel, and function like natural teeth."
+          image="/assets/images/service-implants.svg"
+          slug="implants"
+          accentColor="accent-gold"
+        />
+        <ServiceCard
+          title="Root Canal Therapy"
+          description="A root canal is a safe, effective way to save a tooth that's damaged or infected, helping you avoid extraction."
+          image="/assets/images/service-rootcanal.svg"
+          slug="root-canal-therapy"
+          accentColor="accent-terracotta"
+        />
+        <ServiceCard
+          title="Removable Prosthetics"
+          description="Removable prosthetics, such as full or partial dentures, are a convenient and effective way to replace missing teeth and restore your smile."
+          image="/assets/images/service-cosmetic.svg"
+          slug="removable-prosthetics"
+          accentColor="accent-lavender"
+        />
+        <ServiceCard
+          title="Emergency Dentistry"
+          description="Dental emergencies can be stressful, but you don't have to face them alone. Our team provides fast, compassionate care to relieve pain and restore your smile quickly."
+          image="/assets/images/service-emergency.svg"
+          slug="emergency-dentistry"
+          accentColor="brand-purple"
+        />
+      </div>
+      <div class="text-center mt-8">
+        <a
+          href={`/${lang}/services`}
+          class="bg-accent-teal text-white px-6 py-3 rounded-md font-semibold hover:bg-accent-teal-dark transition inline-block"
+          >View All Services →</a
+        >
+      </div>
+    </div>
+  </section>
+
+  {/* Testimonials Section */}
+  <section class="py-16 bg-brand-purple text-white section-breakout">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="font-heading text-3xl md:text-4xl font-bold mb-8 text-center">
+        A Legacy of Exceptional Care
+      </h2>
+    </div>
+
+    <div class="px-4">
+      <div id="testimonials-container" class="max-w-2xl mx-auto grid">
+        {
+          testimonials.map((t, index) => (
+            <div
+              class:list={[
+                "testimonial-slide col-start-1 row-start-1 transition-opacity duration-700",
+                index === 0 ? "opacity-100" : "opacity-0",
+              ]}
+              data-index={index}
+            >
+              <Testimonial name={t.name} text={t.text} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 mt-8">
+      <div class="flex justify-center gap-2">
+        {
+          testimonials.map((_, index) => (
+            <button
+              class:list={[
+                "testimonial-dot w-2 h-2 rounded-full transition-all duration-300",
+                index === 0 ? "bg-white w-6" : "bg-white/40",
+              ]}
+              data-index={index}
+              aria-label={`Go to testimonial ${index + 1}`}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function setupTestimonialCycle() {
+      const slides = document.querySelectorAll(
+        ".testimonial-slide",
+      ) as NodeListOf<HTMLElement>;
+      const dots = document.querySelectorAll(
+        ".testimonial-dot",
+      ) as NodeListOf<HTMLElement>;
+
+      if (!slides.length || !dots.length) return;
+
+      let currentIndex = 0;
+      let intervalId: number;
+
+      function showSlide(index: number) {
+        currentIndex = index;
+
+        // Update slides
+        slides.forEach((slide, i) => {
+          slide.style.opacity = i === index ? "1" : "0";
+        });
+
+        // Update dots
+        dots.forEach((dot, i) => {
+          if (i === index) {
+            dot.classList.add("bg-white", "w-6");
+            dot.classList.remove("bg-white/40");
+          } else {
+            dot.classList.remove("bg-white", "w-6");
+            dot.classList.add("bg-white/40");
+          }
+        });
+      }
+
+      function nextSlide() {
+        const next = (currentIndex + 1) % slides.length;
+        showSlide(next);
+      }
+
+      // Auto-cycle every 5 seconds
+      function startCycle() {
+        intervalId = window.setInterval(nextSlide, 5000);
+      }
+
+      function resetCycle() {
+        clearInterval(intervalId);
+        startCycle();
+      }
+
+      // Manual navigation via dots
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          showSlide(index);
+          resetCycle();
+        });
+      });
+
+      // Start the cycle
+      startCycle();
+    }
+
+    // Run on page load
+    setupTestimonialCycle();
+
+    // Re-run if needed for view transitions
+    document.addEventListener("astro:page-load", setupTestimonialCycle);
+  </script>
+
+  {/* Google Review CTA Section */}
+  <section class="py-16 bg-white section-breakout">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+      <div class="max-w-2xl mx-auto">
+        <!-- Google G + Stars -->
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-10 h-10 flex-shrink-0">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            <path fill="none" d="M0 0h48v48H0z"/>
+          </svg>
+          <div class="flex gap-1">
+            {[...Array(5)].map(() => (
+              <svg class="w-7 h-7 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+              </svg>
+            ))}
+          </div>
+        </div>
+
+        <h2 class="font-heading text-3xl md:text-4xl font-bold text-brand-purple mb-3">
+          Loved Your Visit?
+        </h2>
+        <p class="text-ink-weak text-lg mb-8 leading-relaxed">
+          Your feedback means the world to us — and helps other families in Bergen County find the care they deserve. It only takes 30 seconds.
+        </p>
+        <a
+          href="https://g.page/r/CYWRx7nn10h2EAE/review"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-3 bg-brand-purple text-white px-8 py-4 rounded-md font-semibold text-lg hover:bg-brand-purple/90 transition shadow-md hover:shadow-lg"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-6 h-6 flex-shrink-0">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            <path fill="none" d="M0 0h48v48H0z"/>
+          </svg>
+          Leave Us a Review on Google
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* Contact Section */}
+  <section class="py-16 bg-brand-light section-breakout">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2
+        class="font-heading text-3xl md:text-4xl font-bold mb-12 text-center text-brand-purple"
+      >
+        Contact Us
+      </h2>
+      <ContactCards />
+    </div>
+  </section>
+</MainLayout>

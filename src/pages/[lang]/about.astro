@@ -1,0 +1,128 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import { LOCALES, type Locale } from "../../i18n/locales";
+import { setLocale } from "../../paraglide/runtime.js";
+import * as m from "../../paraglide/messages.js";
+import { Image } from "astro:assets";
+import kimImage from "../../assets/images/kim2.png";
+import danielImage from "../../assets/images/daniel2.png";
+import hallImage from "../../assets/images/hall.jpg";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+setLocale(lang);
+---
+
+<MainLayout>
+  {/* Hero Section */}
+  <section
+    class="relative h-[400px] md:h-[500px] overflow-hidden section-breakout -mt-8"
+  >
+    <Image
+      src={hallImage}
+      alt="Kim Dental office hallway"
+      widths={[640, 768, 1024, 1536, 1920]}
+      sizes="100vw"
+      format="webp"
+      quality="high"
+      priority={true}
+      class="w-full h-full object-cover object-center md:object-[center_60%]"
+    />
+  </section>
+
+  {/* Our Office Section */}
+  <section class="py-16 bg-white section-breakout">
+    <div class="max-w-6xl mx-auto px-4">
+      <h1
+        class="font-heading text-4xl md:text-5xl font-bold mb-12 text-brand-purple"
+      >
+        {m.our_office_title()}
+      </h1>
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-700 text-lg leading-relaxed"
+      >
+        <p>{m.our_office_p1()}</p>
+        <p>{m.our_office_p2()}</p>
+      </div>
+    </div>
+  </section>
+
+  {/* Meet Our Dentists Section */}
+  <div class="max-w-6xl mx-auto py-16 px-4">
+    <!-- Dr. Soo B Kim Section -->
+    <section class="mb-24">
+      <div
+        class="flex flex-col lg:flex-row items-center lg:items-start gap-12 bg-brand-light p-4 md:p-6 rounded-lg"
+      >
+        <div
+          class="flex-shrink-0 w-full max-w-md mx-auto lg:mx-0 lg:w-[350px] xl:w-[400px]"
+        >
+          <Image
+            src={kimImage}
+            alt="Dr. Soo B Kim"
+            width={864}
+            height={1184}
+            widths={[350, 400, 864]}
+            sizes="(min-width: 1280px) 400px, (min-width: 1024px) 350px, (min-width: 768px) calc(100vw - 6rem), calc(100vw - 4rem)"
+            format="webp"
+            quality="high"
+            priority={true}
+            class="w-full h-auto object-cover rounded-lg shadow-lg"
+          />
+        </div>
+        <div class="flex-1">
+          <h2
+            class="font-heading text-3xl md:text-4xl font-bold mb-6 text-brand-purple"
+          >
+            {m.about_title()}
+          </h2>
+          <div class="space-y-4 text-gray-700 text-lg leading-relaxed">
+            <p>{m.about_p1()}</p>
+            <p>{m.about_p2()}</p>
+            <p>{m.about_p3()}</p>
+            <p>{m.about_p4()}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dr. Daniel Kim Section -->
+    <section class="mb-16">
+      <div
+        class="flex flex-col lg:flex-row-reverse items-center lg:items-start gap-12 bg-brand-light p-4 md:p-6 rounded-lg"
+      >
+        <div
+          class="flex-shrink-0 w-full max-w-md mx-auto lg:mx-0 lg:w-[350px] xl:w-[400px]"
+        >
+          <Image
+            src={danielImage}
+            alt="Dr. Daniel Kim"
+            width={679}
+            height={808}
+            widths={[350, 400, 679]}
+            sizes="(min-width: 1280px) 400px, (min-width: 1024px) 350px, (min-width: 768px) calc(100vw - 6rem), calc(100vw - 4rem)"
+            format="webp"
+            quality="high"
+            loading="lazy"
+            class="w-full h-auto object-cover rounded-lg shadow-lg"
+          />
+        </div>
+        <div class="flex-1">
+          <h2
+            class="font-heading text-3xl md:text-4xl font-bold mb-6 text-brand-purple"
+          >
+            {m.about_daniel_title()}
+          </h2>
+          <div class="space-y-4 text-gray-700 text-lg leading-relaxed">
+            <p>{m.about_daniel_p1()}</p>
+            <p>{m.about_daniel_p2()}</p>
+            <p>{m.about_daniel_p3()}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</MainLayout>

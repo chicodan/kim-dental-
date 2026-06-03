@@ -1,0 +1,146 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import BookAppointmentButton from "../../../components/BookAppointmentButton.astro";
+import { LOCALES, type Locale } from "../../../i18n/locales";
+import { setLocale } from "../../../paraglide/runtime.js";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+setLocale(lang);
+---
+
+<MainLayout>
+  <div class="max-w-6xl mx-auto px-4 pt-20 pb-12">
+
+    <!-- Breadcrumb -->
+    <nav class="mb-8 text-sm text-ink-weak">
+      <a href={`/${lang}/services/implants`} class="hover:text-brand-purple transition-colors">Implant Dentistry</a>
+      <span class="mx-2">›</span>
+      <span class="text-ink">Dental Implant Procedure</span>
+    </nav>
+
+    <!-- Header -->
+    <div class="mb-12">
+      <h1 class="text-4xl md:text-5xl font-heading font-bold text-brand-purple mb-4">
+        Dental Implant Procedure
+      </h1>
+      <p class="text-lg text-ink-weak leading-relaxed max-w-3xl">
+        A dental implant is a small titanium post surgically placed into the jawbone to replace the root of a missing tooth. Over time it fuses with the bone, creating a permanent, stable foundation for a lifelike crown. The result looks, feels, and functions just like a natural tooth.
+      </p>
+    </div>
+
+    <!-- Step-by-step process -->
+    <div class="mb-16">
+      <h2 class="text-2xl font-heading font-semibold text-ink mb-8">The Implant Process — Step by Step</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <div class="p-6 bg-white rounded-xl border border-accent-gold/20 shadow-sm">
+          <div class="flex items-center gap-4 mb-4">
+            <span class="w-10 h-10 rounded-full bg-brand-purple text-white font-bold flex items-center justify-center text-lg flex-shrink-0">1</span>
+            <h3 class="text-lg font-heading font-semibold text-brand-purple">Consultation & Planning</h3>
+          </div>
+          <p class="text-ink-weak text-sm leading-relaxed">
+            We begin with a comprehensive exam, digital X-rays, and 3D imaging to evaluate your bone density, gum health, and bite. This allows us to map out a precise, personalized treatment plan before anything begins.
+          </p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-accent-gold/20 shadow-sm">
+          <div class="flex items-center gap-4 mb-4">
+            <span class="w-10 h-10 rounded-full bg-brand-purple text-white font-bold flex items-center justify-center text-lg flex-shrink-0">2</span>
+            <h3 class="text-lg font-heading font-semibold text-brand-purple">Implant Placement</h3>
+          </div>
+          <p class="text-ink-weak text-sm leading-relaxed">
+            Under local anesthesia, the titanium implant post is gently placed into the jawbone. The area is then sutured and allowed to heal. Most patients are comfortable returning to normal activities within a day or two.
+          </p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-accent-gold/20 shadow-sm">
+          <div class="flex items-center gap-4 mb-4">
+            <span class="w-10 h-10 rounded-full bg-brand-purple text-white font-bold flex items-center justify-center text-lg flex-shrink-0">3</span>
+            <h3 class="text-lg font-heading font-semibold text-brand-purple">Osseointegration</h3>
+          </div>
+          <p class="text-ink-weak text-sm leading-relaxed">
+            Over the next 3–6 months, the implant fuses directly with your jawbone in a natural process called osseointegration. This creates an exceptionally strong and stable anchor — the same way a natural tooth root bonds with bone.
+          </p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-accent-gold/20 shadow-sm">
+          <div class="flex items-center gap-4 mb-4">
+            <span class="w-10 h-10 rounded-full bg-brand-purple text-white font-bold flex items-center justify-center text-lg flex-shrink-0">4</span>
+            <h3 class="text-lg font-heading font-semibold text-brand-purple">Abutment Placement</h3>
+          </div>
+          <p class="text-ink-weak text-sm leading-relaxed">
+            Once healed, a small connector piece called an abutment is attached to the implant post. This component protrudes just above the gumline and serves as the attachment point for your final restoration.
+          </p>
+        </div>
+
+        <div class="p-6 bg-white rounded-xl border border-accent-gold/20 shadow-sm md:col-span-2">
+          <div class="flex items-center gap-4 mb-4">
+            <span class="w-10 h-10 rounded-full bg-brand-purple text-white font-bold flex items-center justify-center text-lg flex-shrink-0">5</span>
+            <h3 class="text-lg font-heading font-semibold text-brand-purple">Crown Placement</h3>
+          </div>
+          <p class="text-ink-weak text-sm leading-relaxed">
+            A custom-made porcelain crown is designed to match the color, size, and shape of your surrounding teeth. It is securely attached to the abutment, completing your new tooth. The result is virtually indistinguishable from a natural tooth.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Why implants + candidacy -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+      <div>
+        <h2 class="text-2xl font-heading font-semibold text-ink mb-6">Why Choose Implants?</h2>
+        <ul class="space-y-3">
+          {[
+            "Look and feel like natural teeth",
+            "Preserve jawbone and prevent bone loss",
+            "No impact on neighboring teeth",
+            "Easy to clean — brush and floss normally",
+            "Built to last a lifetime with proper care",
+            "Restore full chewing strength and function",
+          ].map((item) => (
+            <li class="text-ink-weak flex items-start gap-3">
+              <svg class="w-5 h-5 text-accent-teal flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2 class="text-2xl font-heading font-semibold text-ink mb-6">Am I a Candidate?</h2>
+        <p class="text-ink-weak leading-relaxed mb-4">
+          Most adults in good general health are candidates for dental implants. The key requirements are:
+        </p>
+        <ul class="space-y-3">
+          {[
+            "Sufficient jawbone density to support the implant",
+            "Healthy gums free of active periodontal disease",
+            "Non-smoker or willing to quit (smoking affects healing)",
+            "Good overall health with no uncontrolled systemic conditions",
+          ].map((item) => (
+            <li class="text-ink-weak flex items-start gap-3">
+              <svg class="w-5 h-5 text-accent-teal flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="text-ink-weak text-sm mt-4 leading-relaxed">
+          Patients with insufficient bone may still be candidates after a bone grafting procedure. We will evaluate everything at your consultation.
+        </p>
+      </div>
+    </div>
+
+    <div class="text-center mt-12">
+      <BookAppointmentButton />
+    </div>
+
+  </div>
+</MainLayout>

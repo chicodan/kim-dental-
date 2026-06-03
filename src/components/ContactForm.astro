@@ -1,0 +1,17 @@
+---
+import * as m from "../paraglide/messages.js";
+
+const email = "sookimdental@gmail.com";
+const subject = encodeURIComponent("Inquiry from Website");
+const body = encodeURIComponent(
+  "Hello Dr. Kim,\n\nI would like to inquire about...",
+);
+const mailto = `mailto:${email}?subject=${subject}&body=${body}`;
+---
+
+<a
+  href={mailto}
+  class="inline-block bg-accent-teal text-white px-6 py-3 rounded shadow hover:bg-accent-teal-dark transition font-semibold"
+>
+  {m.email_us()}
+</a>

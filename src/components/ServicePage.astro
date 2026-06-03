@@ -1,0 +1,177 @@
+---
+import BookAppointmentButton from "./BookAppointmentButton.astro";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+const {
+  title,
+  description,
+  image,
+  servicesList,
+  icon,
+  detailedContent,
+  companyLogo,
+} = Astro.props;
+
+// Dynamically import the image from src folder
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/images/*.{jpeg,jpg,png,gif}",
+);
+const imagePath = image.replace("/assets/images/", "/src/assets/images/");
+const imageModule = images[imagePath] ? await images[imagePath]() : null;
+---
+
+<section
+  class="relative min-h-[60vh] flex flex-col items-center justify-center py-16"
+>
+  {
+    imageModule ? (
+      <Image
+        src={imageModule.default}
+        alt={title}
+        widths={[640, 768, 1024, 1536, 1920]}
+        sizes="100vw"
+        format="webp"
+        quality="high"
+        priority={true}
+        class="absolute inset-0 w-full h-full object-cover brightness-50"
+      />
+    ) : (
+      <img
+        src={image}
+        alt={title}
+        class="absolute inset-0 w-full h-full object-cover brightness-50"
+      />
+    )
+  }
+  <div class="relative z-10 section-container">
+    <div class="p-8 bg-white/90 rounded-lg shadow">
+      {
+        icon && (
+          <img
+            src={icon}
+            alt={`${title} icon`}
+            class="w-20 h-20 mx-auto mb-4"
+          />
+        )
+      }
+      <h1
+        class="text-4xl font-heading font-bold mb-2 text-center text-brand-purple"
+      >
+        {title}
+      </h1>
+
+      {
+        detailedContent ? (
+          // Render detailed content for implants
+          <div class="space-y-8">
+            <div class="text-center">
+              <h2 class="text-2xl font-heading font-semibold mb-4 text-accent-teal">
+                {detailedContent.subtitle}
+              </h2>
+              <p class="text-lg text-ink-weak leading-relaxed">
+                {detailedContent.intro}
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h2 class="text-xl font-heading font-semibold mb-4 text-ink">
+                {detailedContent.whatAre.title}
+              </h2>
+              <p class="text-ink-weak leading-relaxed">
+                {detailedContent.whatAre.description}
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h2 class="text-xl font-heading font-semibold mb-4 text-ink">
+                {detailedContent.benefits.title}
+              </h2>
+              <ul class="space-y-2">
+                {detailedContent.benefits.items.map((item: string) => (
+                  <li class="text-ink-weak flex items-start">
+                    <span class="text-accent-teal font-bold mr-2">•</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="mb-8">
+              <h2 class="text-xl font-heading font-semibold mb-4 text-ink">
+                {detailedContent.process.title}
+              </h2>
+              <ul class="space-y-2">
+                {detailedContent.process.steps.map(
+                  (step: string, index: number) => (
+                    <li class="text-ink-weak flex items-start">
+                      <span class="text-brand-purple font-semibold mr-3 bg-brand-light rounded-full w-6 h-6 flex items-center justify-center text-sm flex-shrink-0">
+                        {index + 1}
+                      </span>
+                      {step}
+                    </li>
+                  ),
+                )}
+              </ul>
+            </div>
+
+            <div class="mb-8">
+              <h2 class="text-xl font-heading font-semibold mb-4 text-ink">
+                {detailedContent.candidate.title}
+              </h2>
+              <p class="text-ink-weak mb-4">
+                {detailedContent.candidate.intro}
+              </p>
+              <ul class="space-y-2">
+                {detailedContent.candidate.items.map((item: string) => (
+                  <li class="text-ink-weak flex items-start">
+                    <span class="text-accent-teal font-bold mr-2">✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <p class="text-ink-weak mt-4 italic">
+                {detailedContent.candidate.note}
+              </p>
+            </div>
+
+            <div class="mb-8">
+              <h2 class="text-xl font-heading font-semibold mb-4 text-ink">
+                {detailedContent.care.title}
+              </h2>
+              <p class="text-ink-weak leading-relaxed">
+                {detailedContent.care.description}
+              </p>
+            </div>
+
+            <div class="text-center bg-brand-light p-6 rounded-lg">
+              <p class="text-lg text-ink mb-4">{detailedContent.cta}</p>
+              <BookAppointmentButton />
+            </div>
+
+            <div class="text-center border-t pt-6">
+              <p class="text-ink-weak mb-4">{detailedContent.hiossenNote}</p>
+              {companyLogo && (
+                <img
+                  src={companyLogo}
+                  alt="Company Logo"
+                  class="max-w-[200px] h-auto mx-auto mt-8"
+                />
+              )}
+            </div>
+          </div>
+        ) : (
+          // Render standard content for other services
+          <div class="text-center">
+            <p class="text-lg mb-4 text-ink-weak">{description}</p>
+            <ul class="list-disc list-inside text-left mx-auto max-w-md mb-4 text-ink-weak">
+              {servicesList.map((service: string) => (
+                <li>{service}</li>
+              ))}
+            </ul>
+            <BookAppointmentButton />
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>

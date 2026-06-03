@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  /* Core brand colors */
+  --color-brand-purple: #3c3456;
+  --color-brand-light: #f4f1ec;
+  --color-accent-teal: #3b6e8a;
+  --color-accent-teal-dark: #2d5567;
+
+  /* Text colors */
+  --color-ink: #232129;
+  --color-ink-weak: #514d5d;
+  --color-cream-2: #e9e3da;
+
+  /* Accent colors */
+  --color-accent-gold: #c2a661;
+  --color-accent-gold-dark: #9c854e;
+
+  --color-accent-terracotta: #b8695b;
+  --color-accent-terracotta-dark: #9a5347;
+
+  --color-accent-sage: #6f8d7a;
+  --color-accent-sage-dark: #597164;
+
+  --color-accent-lavender: #7a6ea8;
+  --color-accent-lavender-dark: #635a8a;
+
+  /* Fonts */
+  --font-heading: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-sans:
+    Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+    sans-serif;
+}
+
+.brightness-50 {
+  filter: brightness(0.5);
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}

@@ -1,0 +1,140 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import BookAppointmentButton from "../../../components/BookAppointmentButton.astro";
+import { LOCALES, type Locale } from "../../../i18n/locales";
+import { setLocale } from "../../../paraglide/runtime.js";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+setLocale(lang);
+---
+
+<MainLayout>
+  <div class="max-w-6xl mx-auto px-4 pt-20 pb-12">
+
+    <!-- Breadcrumb -->
+    <nav class="mb-8 text-sm text-ink-weak">
+      <a href={`/${lang}/services/implants`} class="hover:text-brand-purple transition-colors">Implant Dentistry</a>
+      <span class="mx-2">›</span>
+      <span class="text-ink">Full Mouth Dental Implants</span>
+    </nav>
+
+    <!-- Header -->
+    <div class="mb-12">
+      <h1 class="text-4xl md:text-5xl font-heading font-bold text-brand-purple mb-4">
+        Full Mouth Dental Implants
+      </h1>
+      <p class="text-lg text-ink-weak leading-relaxed max-w-3xl">
+        Full mouth dental implants offer a permanent, life-changing solution for patients who have lost most or all of their teeth. Unlike traditional dentures, implant-supported restorations are anchored directly into the jawbone — giving you a stable, beautiful smile you never have to remove.
+      </p>
+    </div>
+
+    <!-- Options -->
+    <div class="mb-16">
+      <h2 class="text-2xl font-heading font-semibold text-ink mb-8">Restoration Options</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-6 bg-white rounded-xl border border-accent-gold/20 shadow-sm">
+          <h3 class="text-lg font-heading font-semibold text-brand-purple mb-3">Implant-Supported Bridge</h3>
+          <p class="text-ink-weak text-sm leading-relaxed">
+            Multiple missing teeth replaced by a fixed bridge anchored to strategically placed implants. No need to involve healthy neighboring teeth as anchors.
+          </p>
+        </div>
+        <div class="p-6 bg-white rounded-xl border border-accent-gold/20 shadow-sm">
+          <h3 class="text-lg font-heading font-semibold text-brand-purple mb-3">Implant-Retained Denture</h3>
+          <p class="text-ink-weak text-sm leading-relaxed">
+            A full denture that snaps onto 2–4 implants for dramatically improved stability. Removable for cleaning but held firmly in place during eating and speaking.
+          </p>
+        </div>
+        <div class="p-6 bg-white rounded-xl border border-accent-gold/20 shadow-sm">
+          <h3 class="text-lg font-heading font-semibold text-brand-purple mb-3">Fixed Full-Arch Restoration</h3>
+          <p class="text-ink-weak text-sm leading-relaxed">
+            A full arch of teeth permanently fixed to 4–6 implants. The most stable and natural-feeling solution — you brush and care for them just like real teeth.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison table -->
+    <div class="mb-16">
+      <h2 class="text-2xl font-heading font-semibold text-ink mb-8">Implants vs. Traditional Dentures</h2>
+      <div class="overflow-x-auto rounded-xl border border-accent-gold/20">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-brand-purple text-white">
+              <th class="text-left px-6 py-4 font-semibold"></th>
+              <th class="text-left px-6 py-4 font-semibold">Full Mouth Implants</th>
+              <th class="text-left px-6 py-4 font-semibold">Traditional Dentures</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-accent-gold/10">
+            {[
+              ["Stability", "Fully secure, anchored to bone", "Can slip or shift"],
+              ["Bone preservation", "Stimulates bone — prevents loss", "Bone continues to shrink over time"],
+              ["Comfort", "Feels like natural teeth", "May cause soreness or irritation"],
+              ["Maintenance", "Brush and floss normally", "Must be removed and soaked"],
+              ["Longevity", "Lifetime with proper care", "Typically replaced every 5–7 years"],
+              ["Diet restrictions", "None — eat anything", "Avoid hard and sticky foods"],
+            ].map(([feature, implants, dentures]) => (
+              <tr class="even:bg-brand-light/30">
+                <td class="px-6 py-4 font-medium text-ink">{feature}</td>
+                <td class="px-6 py-4 text-ink-weak">{implants}</td>
+                <td class="px-6 py-4 text-ink-weak">{dentures}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Benefits + process -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+      <div>
+        <h2 class="text-2xl font-heading font-semibold text-ink mb-6">Why Full Mouth Implants?</h2>
+        <ul class="space-y-3">
+          {[
+            "Restore full chewing function — eat the foods you love",
+            "Speak clearly without slipping or clicking",
+            "Preserve jawbone and facial structure",
+            "Boost confidence with a permanent, natural smile",
+            "Easy care — no adhesives or overnight soaking",
+            "A long-term investment in your health and quality of life",
+          ].map((item) => (
+            <li class="text-ink-weak flex items-start gap-3">
+              <svg class="w-5 h-5 text-accent-teal flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2 class="text-2xl font-heading font-semibold text-ink mb-6">The Process</h2>
+        <ol class="space-y-4">
+          {[
+            ["Consultation", "Comprehensive exam, imaging, and treatment planning tailored to your specific needs."],
+            ["Preparation", "Any remaining failing teeth are extracted and bone grafting performed if needed."],
+            ["Implant Placement", "Implants are surgically placed and allowed to heal and integrate with the bone."],
+            ["Final Restoration", "Your permanent fixed arch or denture is crafted and attached for a completed smile."],
+          ].map(([title, desc], i) => (
+            <li class="flex items-start gap-4">
+              <span class="w-8 h-8 rounded-full bg-brand-purple text-white font-bold flex items-center justify-center text-sm flex-shrink-0 mt-0.5">{i + 1}</span>
+              <div>
+                <p class="font-semibold text-ink">{title}</p>
+                <p class="text-ink-weak text-sm mt-1">{desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+
+    <div class="text-center mt-12">
+      <BookAppointmentButton />
+    </div>
+
+  </div>
+</MainLayout>

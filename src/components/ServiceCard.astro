@@ -1,0 +1,38 @@
+---
+import { getLocale } from "../paraglide/runtime.js";
+
+// Force English-only mode - Korean not ready for launch
+// Runtime override handled in locales.ts
+
+const {
+  title,
+  description,
+  image,
+  slug,
+  accentColor = "accent-teal",
+} = Astro.props;
+const locale = getLocale();
+---
+
+<a href={`/${locale}/services/${slug}`} class="block w-full h-full">
+  <div
+    class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col items-start text-left hover:shadow-xl transition h-full"
+  >
+    <div class={`w-full h-1 bg-${accentColor} rounded-full`}></div>
+    <div class="p-4 flex flex-col items-start text-left flex-grow">
+      {
+        image && (
+          <img
+            src={image}
+            alt={title}
+            class="w-12 h-12 object-cover mb-3 rounded-full"
+          />
+        )
+      }
+      <h3 class="text-base font-bold mb-2 text-brand-purple">
+        {title}
+      </h3>
+      <p class="text-gray-700 text-sm leading-relaxed">{description}</p>
+    </div>
+  </div>
+</a>

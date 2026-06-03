@@ -1,0 +1,13 @@
+---
+const {
+  className = "",
+  mailto = "mailto:sookimdental@gmail.com?subject=Inquiry%20from%20Website&body=Hello%20Dr.%20Kim,%5Cn%5CnI%20would%20like%20to%20inquire%20about...",
+} = Astro.props;
+---
+
+<a
+  href={mailto}
+  class={`bg-accent-teal text-white px-6 py-3 rounded shadow hover:bg-accent-teal-dark transition font-semibold ${className}`}
+>
+  Email Us
+</a>

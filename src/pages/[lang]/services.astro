@@ -1,0 +1,755 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import BookAppointmentButton from "../../components/BookAppointmentButton.astro";
+import { LOCALES, type Locale } from "../../i18n/locales";
+import { setLocale } from "../../paraglide/runtime.js";
+import { Image } from "astro:assets";
+import implantImg from "../../assets/images/implant.jpg";
+import generalDentistryImg from "../../assets/images/dentistry.jpg";
+import rootCanalImg from "../../assets/images/root-canal.jpg";
+import prostheticsImg from "../../assets/images/prosthetics.jpg";
+import hygieneImg from "../../assets/images/hygiene.jpg";
+import emergencyImg from "../../assets/images/emergency.jpg";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+setLocale(lang);
+---
+
+<MainLayout>
+  <div class="max-w-6xl mx-auto px-4 pt-20 pb-12">
+    <!-- Page Header -->
+    <header class="mb-16" data-header>
+      <h1
+        class="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-brand-purple mb-6"
+      >
+        Our Services
+      </h1>
+      <p class="text-lg md:text-xl text-ink-weak max-w-3xl leading-relaxed">
+        Comprehensive dental care designed around your needs, delivered with
+        precision and warmth.
+      </p>
+    </header>
+
+    <!-- Services Index Navigation -->
+    <nav class="mb-20 pb-8 border-b border-cream-2" data-nav>
+      <ul class="flex flex-wrap gap-x-6 gap-y-3 text-sm md:text-base">
+        <li>
+          <a
+            href={`/${lang}/services/general-dentistry`}
+            class="text-ink-weak hover:text-ink font-medium underline decoration-accent-teal decoration-2 underline-offset-4 transition-colors duration-300"
+            >General Dentistry</a
+          >
+        </li>
+        <li>
+          <a
+            href={`/${lang}/services/hygiene`}
+            class="text-ink-weak hover:text-ink font-medium underline decoration-accent-sage decoration-2 underline-offset-4 transition-colors duration-300"
+            >Hygiene</a
+          >
+        </li>
+        <li>
+          <a
+            href={`/${lang}/services/implants`}
+            class="text-ink-weak hover:text-ink font-medium underline decoration-accent-gold decoration-2 underline-offset-4 transition-colors duration-300"
+            >Implants</a
+          >
+        </li>
+        <li>
+          <a
+            href={`/${lang}/services/removable-prosthetics`}
+            class="text-ink-weak hover:text-ink font-medium underline decoration-accent-lavender decoration-2 underline-offset-4 transition-colors duration-300"
+            >Removable Prosthetics</a
+          >
+        </li>
+        <li>
+          <a
+            href={`/${lang}/services/root-canal-therapy`}
+            class="text-ink-weak hover:text-ink font-medium underline decoration-accent-terracotta decoration-2 underline-offset-4 transition-colors duration-300"
+            >Root Canal Therapy</a
+          >
+        </li>
+        <li>
+          <a
+            href={`/${lang}/services/emergency-dentistry`}
+            class="text-ink-weak hover:text-ink font-medium underline decoration-brand-purple decoration-2 underline-offset-4 transition-colors duration-300"
+            >Emergency Dentistry</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Service Overview Sections -->
+    <div class="space-y-32 md:space-y-40">
+      <!-- General Dentistry -->
+      <section id="general-dentistry" class="scroll-mt-8" data-service>
+        <div
+          class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-start"
+        >
+          <div class="md:col-span-5" data-service-image>
+            <div
+              class="aspect-[4/3] rounded-lg overflow-hidden border-2 border-accent-teal/20"
+            >
+              <Image
+                src={generalDentistryImg}
+                alt="A dentist wearing black gloves uses an intraoral scanner on a smiling patient lying in a dental chair."
+                title="Photo by Laurent Yasiel on Unsplash"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+          <div class="md:col-span-7" data-service-content>
+            <div class="w-16 h-1 bg-accent-teal mb-6 rounded-full"></div>
+            <h2
+              class="text-3xl md:text-4xl font-heading font-bold text-brand-purple mb-6"
+            >
+              General Dentistry
+            </h2>
+            <p
+              class="text-lg md:text-xl text-ink-weak mb-8 leading-relaxed max-w-2xl"
+            >
+              We believe healthy smiles start with strong foundations. Our
+              general dentistry services focus on keeping your teeth and gums in
+              excellent shape through gentle, preventive care.
+            </p>
+            <p
+              class="text-base text-ink-weak/80 mb-8 leading-relaxed max-w-2xl"
+            >
+              Comprehensive dental exams, oral cancer screenings, cavity
+              treatment, and tooth-colored restorations.
+            </p>
+            <a
+              href={`/${lang}/services/general-dentistry`}
+              class="inline-flex items-center text-accent-teal hover:text-accent-teal-dark font-medium transition-colors duration-300 group"
+            >
+              <span>Learn More</span>
+              <svg
+                class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hygiene -->
+      <section id="hygiene" class="scroll-mt-8" data-service>
+        <div
+          class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-start"
+        >
+          <div class="md:col-span-7 md:order-1" data-service-content>
+            <div class="w-16 h-1 bg-accent-sage mb-6 rounded-full"></div>
+            <h2
+              class="text-3xl md:text-4xl font-heading font-bold text-brand-purple mb-6"
+            >
+              Hygiene
+            </h2>
+            <p
+              class="text-lg md:text-xl text-ink-weak mb-8 leading-relaxed max-w-2xl"
+            >
+              Professional dental cleanings are an essential part of maintaining
+              strong teeth and healthy gums. Our hygiene team provides gentle,
+              thorough care by removing plaque, tartar, and stains.
+            </p>
+            <p
+              class="text-base text-ink-weak/80 mb-8 leading-relaxed max-w-2xl"
+            >
+              Routine dental cleanings, deep cleanings, fluoride treatments, and
+              personalized oral hygiene recommendations.
+            </p>
+            <a
+              href={`/${lang}/services/hygiene`}
+              class="inline-flex items-center text-accent-teal hover:text-accent-teal-dark font-medium transition-colors duration-300 group"
+            >
+              <span>Learn More</span>
+              <svg
+                class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </a>
+          </div>
+          <div class="md:col-span-5 md:order-2" data-service-image>
+            <div
+              class="aspect-[4/3] rounded-lg overflow-hidden border-2 border-accent-sage/20"
+            >
+              <Image
+                src={hygieneImg}
+                alt="AI generated image of dentist cleaning patient's teeth"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Implants -->
+      <section id="implants" class="scroll-mt-8" data-service>
+        <div
+          class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-start"
+        >
+          <div class="md:col-span-5" data-service-image>
+            <div
+              class="aspect-[4/3] rounded-lg overflow-hidden border-2 border-accent-gold/20"
+            >
+              <Image
+                src={implantImg}
+                alt="Modern dental implant model"
+                title="Photo by Peter Kasprzyk on Unsplash"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+          <div class="md:col-span-7" data-service-content>
+            <div class="w-16 h-1 bg-accent-gold mb-6 rounded-full"></div>
+            <h2
+              class="text-3xl md:text-4xl font-heading font-bold text-brand-purple mb-6"
+            >
+              Implants
+            </h2>
+            <p
+              class="text-lg md:text-xl text-ink-weak mb-8 leading-relaxed max-w-2xl"
+            >
+              Dental implants are a long-lasting solution for replacing missing
+              teeth and restoring your smile. Designed to look, feel, and
+              function like natural teeth.
+            </p>
+            <p
+              class="text-base text-ink-weak/80 mb-8 leading-relaxed max-w-2xl"
+            >
+              Single and multiple tooth implants, implant-supported bridges, 3D
+              imaging and planning, and personalized treatment plans.
+            </p>
+            <a
+              href={`/${lang}/services/implants`}
+              class="inline-flex items-center text-accent-teal hover:text-accent-teal-dark font-medium transition-colors duration-300 group"
+            >
+              <span>Learn More</span>
+              <svg
+                class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Root Canal Therapy -->
+      <section id="root-canal-therapy" class="scroll-mt-8" data-service>
+        <div
+          class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-start"
+        >
+          <div class="md:col-span-7 md:order-1" data-service-content>
+            <div class="w-16 h-1 bg-accent-terracotta mb-6 rounded-full"></div>
+            <h2
+              class="text-3xl md:text-4xl font-heading font-bold text-brand-purple mb-6"
+            >
+              Root Canal Therapy
+            </h2>
+            <p
+              class="text-lg md:text-xl text-ink-weak mb-8 leading-relaxed max-w-2xl"
+            >
+              A root canal is a safe, effective way to save a tooth that's
+              damaged or infected, helping you avoid extraction.
+            </p>
+            <p
+              class="text-base text-ink-weak/80 mb-8 leading-relaxed max-w-2xl"
+            >
+              Gentle root canal procedures, digital imaging for precision,
+              modern pain management, and emergency appointments available.
+            </p>
+            <a
+              href={`/${lang}/services/root-canal-therapy`}
+              class="inline-flex items-center text-accent-teal hover:text-accent-teal-dark font-medium transition-colors duration-300 group"
+            >
+              <span>Learn More</span>
+              <svg
+                class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </a>
+          </div>
+          <div class="md:col-span-5 md:order-2" data-service-image>
+            <div
+              class="aspect-[4/3] rounded-lg overflow-hidden border-2 border-accent-terracotta/20"
+            >
+              <Image
+                src={rootCanalImg}
+                alt="Dental tools"
+                title="Photo by Ozkan Guner on Unsplash"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Removable Prosthetics -->
+      <section id="removable-prosthetics" class="scroll-mt-8" data-service>
+        <div
+          class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-start"
+        >
+          <div class="md:col-span-5" data-service-image>
+            <div
+              class="aspect-[4/3] rounded-lg overflow-hidden border-2 border-accent-lavender/20"
+            >
+              <Image
+                src={prostheticsImg}
+                alt="Close-up of dentures"
+                title="Photo by Quang Tri Nguyen on Unsplash"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+          <div class="md:col-span-7" data-service-content>
+            <div class="w-16 h-1 bg-accent-lavender mb-6 rounded-full"></div>
+            <h2
+              class="text-3xl md:text-4xl font-heading font-bold text-brand-purple mb-6"
+            >
+              Removable Prosthetics
+            </h2>
+            <p
+              class="text-lg md:text-xl text-ink-weak mb-8 leading-relaxed max-w-2xl"
+            >
+              Removable prosthetics, such as full or partial dentures, are a
+              convenient and effective way to replace missing teeth and restore
+              your smile.
+            </p>
+            <p
+              class="text-base text-ink-weak/80 mb-8 leading-relaxed max-w-2xl"
+            >
+              Full or partial dentures, custom impressions for comfortable fit,
+              and follow-up visits for adjustments.
+            </p>
+            <a
+              href={`/${lang}/services/removable-prosthetics`}
+              class="inline-flex items-center text-accent-teal hover:text-accent-teal-dark font-medium transition-colors duration-300 group"
+            >
+              <span>Learn More</span>
+              <svg
+                class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Emergency Dentistry -->
+      <section id="emergency-dentistry" class="scroll-mt-8" data-service>
+        <div
+          class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-start"
+        >
+          <div class="md:col-span-7 md:order-1" data-service-content>
+            <div class="w-16 h-1 bg-brand-purple mb-6 rounded-full"></div>
+            <h2
+              class="text-3xl md:text-4xl font-heading font-bold text-brand-purple mb-6"
+            >
+              Emergency Dentistry
+            </h2>
+            <p
+              class="text-lg md:text-xl text-ink-weak mb-8 leading-relaxed max-w-2xl"
+            >
+              Dental emergencies can be stressful, but you don't have to face
+              them alone. Our team provides fast, compassionate care to relieve
+              pain and restore your smile quickly.
+            </p>
+            <p
+              class="text-base text-ink-weak/80 mb-8 leading-relaxed max-w-2xl"
+            >
+              Toothaches & dental pain, broken or chipped fillings, infection &
+              swelling, and same-day appointments.
+            </p>
+            <a
+              href={`/${lang}/services/emergency-dentistry`}
+              class="inline-flex items-center text-accent-teal hover:text-accent-teal-dark font-medium transition-colors duration-300 group"
+            >
+              <span>Learn More</span>
+              <svg
+                class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </a>
+          </div>
+          <div class="md:col-span-5 md:order-2" data-service-image>
+            <div
+              class="aspect-[1/1] rounded-lg overflow-hidden border-2 border-brand-purple/20"
+            >
+              <Image
+                src={emergencyImg}
+                alt="Compassionate dentist providing urgent care, conveying relief and professional emergency treatment"
+                title="Photo by Navy Medicine on Unsplash"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Insurance Section -->
+    <div class="mt-12" data-insurance>
+      <div class="bg-brand-light rounded-lg p-8 md:p-12">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+          <!-- Insurance Accepted -->
+          <div>
+            <h3
+              class="text-xl font-heading font-semibold text-brand-purple mb-4"
+            >
+              Insurance Accepted
+            </h3>
+            <ul class="space-y-2 text-ink-weak">
+              <li class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-3 text-accent-teal flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Delta Dental</span>
+              </li>
+              <li class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-3 text-accent-teal flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>MetLife</span>
+              </li>
+              <li class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-3 text-accent-teal flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Aetna</span>
+              </li>
+              <li class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-3 text-accent-teal flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Cigna</span>
+              </li>
+              <li class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-3 text-accent-teal flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Guardian</span>
+              </li>
+              <li class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-3 text-accent-teal flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>UnitedHealthcare</span>
+              </li>
+              <li class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-3 text-accent-teal flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Most major PPO plans</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Payment Methods -->
+          <div>
+            <h3
+              class="text-xl font-heading font-semibold text-brand-purple mb-4"
+            >
+              Payment Methods
+            </h3>
+            <ul class="space-y-2 text-ink-weak mb-6">
+              <li class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-3 text-accent-teal flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Cash</span>
+              </li>
+              <li class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-3 text-accent-teal flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Credit Cards</span>
+              </li>
+              <li class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-3 text-accent-teal flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Flexible Payment Plans</span>
+              </li>
+            </ul>
+            <p class="text-sm text-ink-weak/80 leading-relaxed">
+              Please call our office for details about your specific insurance
+              or payment needs.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Book Appointment -->
+    <div class="text-center mt-16 mb-12" data-book-appointment>
+      <BookAppointmentButton />
+    </div>
+  </div>
+</MainLayout>
+
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  if (!prefersReducedMotion) {
+    // Animate page header on load
+    const header = document.querySelector("[data-header]");
+    gsap.from(header, {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      ease: "power3.out",
+      delay: 0.2,
+    });
+
+    // Animate navigation
+    const nav = document.querySelector("[data-nav]");
+    gsap.from(nav, {
+      opacity: 0,
+      y: 20,
+      duration: 0.8,
+      ease: "power2.out",
+      delay: 0.5,
+    });
+
+    // Animate each service section as it enters viewport
+    const serviceSections = document.querySelectorAll("[data-service]");
+    serviceSections.forEach((section, index) => {
+      const image = section.querySelector("[data-service-image]");
+      const content = section.querySelector("[data-service-content]");
+
+      // Create a timeline for this section
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      });
+
+      // Stagger the image and content animations
+      tl.from(image, {
+        opacity: 0,
+        x: index % 2 === 0 ? -40 : 40,
+        duration: 0.8,
+        ease: "power2.out",
+      }).from(
+        content,
+        {
+          opacity: 0,
+          x: index % 2 === 0 ? 40 : -40,
+          duration: 0.8,
+          ease: "power2.out",
+        },
+        "-=0.6",
+      ); // Overlap animations by 0.6s
+
+      // Add subtle parallax effect to images
+      gsap.to(image, {
+        y: -30,
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+      });
+    });
+
+    // Animate insurance section
+    const insuranceSection = document.querySelector("[data-insurance]");
+    if (insuranceSection) {
+      gsap.from(insuranceSection, {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: insuranceSection,
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+      });
+    }
+
+    // Animate book appointment button
+    const bookButton = document.querySelector("[data-book-appointment]");
+    if (bookButton) {
+      gsap.from(bookButton, {
+        opacity: 0,
+        scale: 0.95,
+        duration: 0.6,
+        ease: "back.out(1.2)",
+        scrollTrigger: {
+          trigger: bookButton,
+          start: "top 90%",
+          toggleActions: "play none none none",
+        },
+      });
+    }
+  } else {
+    // For users with reduced motion preference, just show everything
+    gsap.set(
+      "[data-header], [data-nav], [data-service], [data-insurance], [data-book-appointment]",
+      {
+        opacity: 1,
+        x: 0,
+        y: 0,
+      },
+    );
+  }
+</script>

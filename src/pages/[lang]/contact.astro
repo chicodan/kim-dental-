@@ -1,0 +1,75 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ContactCards from "../../components/ContactCards.astro";
+import { LOCALES, type Locale } from "../../i18n/locales";
+import { setLocale } from "../../paraglide/runtime.js";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+setLocale(lang);
+---
+
+<MainLayout>
+  {/* Contact Information Section */}
+  <section class="py-16 bg-brand-light section-breakout">
+    <div class="max-w-6xl mx-auto px-4">
+      <ContactCards />
+    </div>
+  </section>
+
+  {/* Google Review CTA */}
+  <section class="py-12 bg-white section-breakout">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 bg-brand-light rounded-xl p-8 border border-accent-gold/20">
+        <div class="flex items-center gap-4">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-12 h-12 flex-shrink-0">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+          </svg>
+          <div>
+            <div class="flex gap-1 mb-1">
+              {[...Array(5)].map(() => (
+                <svg class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+              ))}
+            </div>
+            <p class="font-heading font-semibold text-brand-purple text-lg">Had a great visit?</p>
+            <p class="text-ink-weak text-sm">Share your experience and help other families find us.</p>
+          </div>
+        </div>
+        <a
+          href="https://g.page/r/CYWRx7nn10h2EAE/review"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex-shrink-0 inline-flex items-center gap-2 bg-brand-purple text-white px-6 py-3 rounded-md font-semibold hover:bg-brand-purple/90 transition whitespace-nowrap"
+        >
+          Leave Us a Review
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* Map Section */}
+  <section class="section-breakout">
+    <div class="w-full">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1710.8608430814492!2d-74.0520631456024!3d40.93541023765597!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2fa92fd36cf95%3A0x7648d7e7b9c79185!2sSoo%20B%20Kim%2CD.D.S.%2CP.C.!5e0!3m2!1sen!2sus!4v1760969709277!5m2!1sen!2sus"
+        width="100%"
+        height="500"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <p class="text-sm text-gray-600 text-center my-6 px-4">
+        Parking available on site. For emergencies, please call our office
+        directly.
+      </p>
+    </div>
+  </section>
+</MainLayout>

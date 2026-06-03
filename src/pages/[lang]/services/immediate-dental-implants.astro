@@ -1,0 +1,102 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import BookAppointmentButton from "../../../components/BookAppointmentButton.astro";
+import { LOCALES, type Locale } from "../../../i18n/locales";
+import { setLocale } from "../../../paraglide/runtime.js";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+setLocale(lang);
+---
+
+<MainLayout>
+  <div class="max-w-6xl mx-auto px-4 pt-20 pb-12">
+
+    <!-- Breadcrumb -->
+    <nav class="mb-8 text-sm text-ink-weak">
+      <a href={`/${lang}/services/implants`} class="hover:text-brand-purple transition-colors">Implant Dentistry</a>
+      <span class="mx-2">›</span>
+      <span class="text-ink">Immediate Dental Implants</span>
+    </nav>
+
+    <!-- Header -->
+    <div class="mb-12">
+      <h1 class="text-4xl md:text-5xl font-heading font-bold text-brand-purple mb-4">
+        Immediate Dental Implants
+      </h1>
+      <p class="text-lg text-ink-weak leading-relaxed max-w-3xl">
+        Immediate dental implants — also called same-day implants — allow us to place a titanium implant post on the same day a tooth is extracted, reducing your overall treatment time and sparing you from wearing a gap in your smile during healing.
+      </p>
+    </div>
+
+    <!-- How it works + benefits -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+      <div>
+        <h2 class="text-2xl font-heading font-semibold text-ink mb-6">How It Works</h2>
+        <p class="text-ink-weak leading-relaxed mb-4">
+          In a traditional implant timeline, the tooth is extracted and you wait several months for the socket to fully heal before placing the implant. With immediate implants, we carefully place the implant into the fresh extraction socket during the same visit.
+        </p>
+        <p class="text-ink-weak leading-relaxed mb-4">
+          In many cases, a temporary crown can also be placed the same day, so you leave the office with a complete-looking smile. The final permanent crown is placed once osseointegration is complete — typically 3–6 months later.
+        </p>
+        <p class="text-ink-weak leading-relaxed">
+          Not every patient or tooth site is suitable for this technique. Careful evaluation of bone volume, socket condition, and overall health is essential to ensure predictable, long-lasting results.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-2xl font-heading font-semibold text-ink mb-6">Benefits</h2>
+        <ul class="space-y-3">
+          {[
+            "Fewer appointments and shorter overall timeline",
+            "Preserves bone and soft tissue at the extraction site",
+            "Temporary crown placed same day in eligible cases",
+            "No extended period of wearing a gap or partial",
+            "Reduced total healing phases compared to traditional implants",
+            "Natural-looking result with a permanent crown",
+          ].map((item) => (
+            <li class="text-ink-weak flex items-start gap-3">
+              <svg class="w-5 h-5 text-accent-teal flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+              </svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Candidacy -->
+    <div class="p-8 bg-gradient-to-br from-brand-light to-white rounded-xl shadow-sm mb-16">
+      <h2 class="text-2xl font-heading font-semibold text-ink mb-4">Are You a Candidate?</h2>
+      <p class="text-ink-weak leading-relaxed mb-6 max-w-3xl">
+        Immediate implants are not right for every situation. The best candidates typically have:
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {[
+          "Adequate bone height and width at the extraction site",
+          "No active infection or significant bone loss",
+          "Good overall systemic health",
+          "A tooth that can be extracted cleanly without damaging surrounding bone",
+        ].map((item) => (
+          <div class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-accent-teal flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-ink-weak text-sm">{item}</span>
+          </div>
+        ))}
+      </div>
+      <p class="text-ink-weak text-sm mt-6 leading-relaxed">
+        We will thoroughly evaluate your specific situation during your consultation and let you know whether immediate placement is the right option for you.
+      </p>
+    </div>
+
+    <div class="text-center mt-12">
+      <BookAppointmentButton />
+    </div>
+
+  </div>
+</MainLayout>

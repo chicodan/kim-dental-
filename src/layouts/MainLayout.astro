@@ -1,0 +1,142 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { getLocale } from "../paraglide/runtime.js";
+
+// Force English-only mode - Korean not ready for launch
+// Runtime override handled in locales.ts
+
+const lang = getLocale();
+const dir = "ltr"; // Both English and Korean are left-to-right
+---
+
+<html lang={lang} dir={dir} class="overflow-x-hidden">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Soo B Kim, DDS | Dentist in Paramus, NJ | Gentle Care. Radiant Results
+    </title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta
+      name="description"
+      content="Dr. Soo B Kim and Dr. Daniel Kim provide comprehensive dental care in Paramus, NJ. General dentistry, implants, cosmetic procedures, and emergency care. Gentle, family-focused practice."
+    />
+    <meta
+      name="keywords"
+      content="dentist Paramus NJ, dental care Bergen County, dental implants, general dentistry, cosmetic dentistry, emergency dentist"
+    />
+    <meta name="author" content="Dr. Soo B Kim, DDS" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="en-US" />
+    <meta name="geo.region" content="US-NJ" />
+    <meta name="geo.placename" content="Paramus" />
+    <meta name="geo.position" content="40.935500431111485;-74.05181435087523" />
+    <meta name="ICBM" content="40.935500431111485, -74.05181435087523" />
+    <link rel="canonical" href="https://sookimdental.com" />
+    <meta
+      property="og:title"
+      content="Soo B Kim, DDS | Dentist in Paramus, NJ | Gentle Care. Radiant Results"
+    />
+    <meta
+      property="og:description"
+      content="Dr. Soo B Kim and Dr. Daniel Kim provide comprehensive dental care in Paramus, NJ. General dentistry, implants, cosmetic procedures, and emergency care."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sookimdental.com" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Soo B Kim, DDS | Dentist in Paramus, NJ"
+    />
+    <meta
+      name="twitter:description"
+      content="Comprehensive dental care in Paramus, NJ. General dentistry, implants, cosmetic procedures, and emergency care."
+    />
+
+    <!-- Structured Data for Local Business -->
+    <script is:inline type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "DentalClinic",
+        "name": "Soo B Kim, DDS",
+        "description": "Comprehensive dental care in Paramus, NJ. General dentistry, implants, cosmetic procedures, and emergency care.",
+        "url": "https://sookimdental.com",
+        "telephone": "201-599-1888",
+        "email": "sookimdental@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "275 Forest Ave #110",
+          "addressLocality": "Paramus",
+          "addressRegion": "NJ",
+          "postalCode": "07652",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "40.935500431111485",
+          "longitude": "-74.05181435087523"
+        },
+        "openingHours": [
+          "Mo 08:30-17:00",
+          "Tu 08:30-19:00",
+          "We 08:30-17:00",
+          "Th 08:30-17:00",
+          "Fr 08:30-17:00",
+          "Sa 08:30-14:00",
+          "Su closed"
+        ],
+        "medicalSpecialty": "Dentistry",
+        "founder": {
+          "@type": "Person",
+          "name": "Dr. Soo B Kim",
+          "jobTitle": "Dentist"
+        },
+        "employee": [
+          {
+            "@type": "Person",
+            "name": "Dr. Soo B Kim",
+            "jobTitle": "Dentist"
+          },
+          {
+            "@type": "Person",
+            "name": "Dr. Daniel Kim",
+            "jobTitle": "Dentist"
+          }
+        ]
+      }
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      is:inline
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-29S7JS6YL7"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-29S7JS6YL7");
+    </script>
+  </head>
+  <body
+    class="bg-brand-light text-gray-900 flex flex-col min-h-screen overflow-x-hidden"
+  >
+    <Header />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

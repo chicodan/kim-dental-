@@ -1,0 +1,253 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import BookAppointmentButton from "../../../components/BookAppointmentButton.astro";
+import { LOCALES, type Locale } from "../../../i18n/locales";
+import { setLocale } from "../../../paraglide/runtime.js";
+import { Image } from "astro:assets";
+import implantImg from "../../../assets/images/implant.jpg";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+setLocale(lang);
+---
+
+<MainLayout>
+  <div class="max-w-6xl mx-auto px-4 pt-20 pb-12">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 mb-12">
+      <!-- Main Content -->
+      <div class="md:col-span-7">
+        <div class="flex items-center gap-4 mb-6">
+          <h1
+            class="text-4xl md:text-5xl font-heading font-bold text-brand-purple"
+          >
+            Implants
+          </h1>
+          <img
+            src="/assets/images/service-implants.svg"
+            alt="Implants icon"
+            class="w-16 h-16"
+          />
+        </div>
+
+        <div class="space-y-6">
+          <p class="text-lg text-ink-weak leading-relaxed">
+            Dental implants are a long-lasting solution for replacing missing
+            teeth and restoring your smile. Designed to look, feel, and function
+            like natural teeth, implants not only improve your appearance but
+            also support your overall oral health by preserving bone and
+            maintaining proper bite alignment. Whether you're missing a single
+            tooth or several, our team provides personalized implant care to
+            help you chew comfortably, smile confidently, and enjoy life without
+            limitations.
+          </p>
+
+          <div class="mt-8">
+            <h2 class="text-2xl font-heading font-semibold mb-4 text-ink">
+              Our Services Include:
+            </h2>
+            <ul class="space-y-3">
+              <li class="text-ink-weak flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-accent-teal flex-shrink-0 mt-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2.5"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Single and multiple tooth implants</span>
+              </li>
+              <li class="text-ink-weak flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-accent-teal flex-shrink-0 mt-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2.5"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Implant-supported bridges</span>
+              </li>
+              <li class="text-ink-weak flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-accent-teal flex-shrink-0 mt-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2.5"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Implant-retained dentures</span>
+              </li>
+              <li class="text-ink-weak flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-accent-teal flex-shrink-0 mt-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2.5"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>3D imaging and planning</span>
+              </li>
+              <li class="text-ink-weak flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-accent-teal flex-shrink-0 mt-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2.5"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Personalized treatment plans</span>
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="mt-12 p-8 bg-gradient-to-br from-brand-light to-white rounded-xl shadow-sm"
+          >
+            <div class="flex items-center gap-6">
+              <div class="flex-shrink-0">
+                <img
+                  src="/assets/images/Hiossen-New-Logo.png"
+                  alt="Hiossen Logo"
+                  class="w-32 h-auto"
+                />
+              </div>
+              <div class="flex-1">
+                <h3 class="text-lg font-semibold text-brand-purple mb-2">
+                  Premium Implant Systems
+                </h3>
+                <p class="text-ink-weak text-sm leading-relaxed">
+                  We proudly use Hiossen dental implant systems, known for their
+                  precision engineering and proven long-term success.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side Image -->
+      <div class="md:col-span-5">
+        <div class="sticky top-24">
+          <div
+            class="aspect-[4/3] rounded-lg overflow-hidden border-2 border-accent-gold/20"
+          >
+            <Image
+              src={implantImg}
+              alt="Modern dental implant model"
+              title="Photo by Peter Kasprzyk on Unsplash"
+              widths={[400, 600, 800, 1200]}
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 42vw, 500px"
+              format="webp"
+              quality="high"
+              loading="lazy"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subsections -->
+    <div class="mt-16">
+      <h2 class="text-2xl font-heading font-semibold text-ink mb-8">Explore Our Implant Services</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <a
+          href={`/${lang}/services/dental-implant-procedure`}
+          class="group p-6 bg-white rounded-xl border border-accent-gold/20 shadow-sm hover:shadow-md hover:border-brand-purple/30 transition-all duration-300"
+        >
+          <div class="w-10 h-10 rounded-full bg-brand-light flex items-center justify-center mb-4 group-hover:bg-brand-purple/10 transition-colors">
+            <svg class="w-5 h-5 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-heading font-semibold text-brand-purple mb-2 group-hover:underline">Dental Implant Procedure</h3>
+          <p class="text-ink-weak text-sm leading-relaxed">
+            Learn what dental implants are, how the procedure works step by step, and what to expect from start to finish.
+          </p>
+          <span class="inline-flex items-center gap-1 mt-4 text-accent-teal text-sm font-medium">
+            Learn More
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </a>
+
+        <a
+          href={`/${lang}/services/immediate-dental-implants`}
+          class="group p-6 bg-white rounded-xl border border-accent-gold/20 shadow-sm hover:shadow-md hover:border-brand-purple/30 transition-all duration-300"
+        >
+          <div class="w-10 h-10 rounded-full bg-brand-light flex items-center justify-center mb-4 group-hover:bg-brand-purple/10 transition-colors">
+            <svg class="w-5 h-5 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-heading font-semibold text-brand-purple mb-2 group-hover:underline">Immediate Dental Implants</h3>
+          <p class="text-ink-weak text-sm leading-relaxed">
+            Same-day implant placement at the time of extraction — fewer visits, faster results, and no gap in your smile.
+          </p>
+          <span class="inline-flex items-center gap-1 mt-4 text-accent-teal text-sm font-medium">
+            Learn More
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </a>
+
+        <a
+          href={`/${lang}/services/full-mouth-dental-implants`}
+          class="group p-6 bg-white rounded-xl border border-accent-gold/20 shadow-sm hover:shadow-md hover:border-brand-purple/30 transition-all duration-300"
+        >
+          <div class="w-10 h-10 rounded-full bg-brand-light flex items-center justify-center mb-4 group-hover:bg-brand-purple/10 transition-colors">
+            <svg class="w-5 h-5 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-heading font-semibold text-brand-purple mb-2 group-hover:underline">Full Mouth Dental Implants</h3>
+          <p class="text-ink-weak text-sm leading-relaxed">
+            A permanent solution for patients missing most or all of their teeth — stable, natural-feeling, and life-changing.
+          </p>
+          <span class="inline-flex items-center gap-1 mt-4 text-accent-teal text-sm font-medium">
+            Learn More
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center mt-12">
+      <BookAppointmentButton />
+    </div>
+  </div>
+</MainLayout>

@@ -1,0 +1,158 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import BookAppointmentButton from "../../../components/BookAppointmentButton.astro";
+import { LOCALES, type Locale } from "../../../i18n/locales";
+import { setLocale } from "../../../paraglide/runtime.js";
+import { Image } from "astro:assets";
+import rootCanalImg from "../../../assets/images/root-canal.jpg";
+
+export function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+setLocale(lang);
+---
+
+<MainLayout>
+  <div class="max-w-6xl mx-auto px-4 pt-20 pb-12">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 mb-12">
+      <!-- Main Content -->
+      <div class="md:col-span-7">
+        <div class="flex items-center gap-4 mb-6">
+          <h1
+            class="text-4xl md:text-5xl font-heading font-bold text-brand-purple"
+          >
+            Root Canal Therapy
+          </h1>
+          <img
+            src="/assets/images/service-rootcanal.svg"
+            alt="Root Canal Therapy icon"
+            class="w-16 h-16"
+          />
+        </div>
+
+        <div class="space-y-6">
+          <p class="text-lg text-ink-weak leading-relaxed">
+            A root canal is a safe, effective way to save a tooth that's damaged
+            or infected, helping you avoid extraction. During the procedure, our
+            team carefully removes the infected tissue, cleans and protects the
+            tooth, and restores it so you can maintain a healthy, natural smile.
+            With gentle techniques and modern technology, we make the process as
+            comfortable as possible, relieving pain and preserving your tooth
+            for years to come.
+          </p>
+
+          <div class="mt-8">
+            <h2 class="text-2xl font-heading font-semibold mb-4 text-ink">
+              Our Services Include:
+            </h2>
+            <ul class="space-y-3">
+              <li class="text-ink-weak flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-accent-teal flex-shrink-0 mt-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2.5"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Gentle root canal procedure</span>
+              </li>
+              <li class="text-ink-weak flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-accent-teal flex-shrink-0 mt-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2.5"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Digital imaging for precision</span>
+              </li>
+              <li class="text-ink-weak flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-accent-teal flex-shrink-0 mt-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2.5"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Modern pain management</span>
+              </li>
+              <li class="text-ink-weak flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-accent-teal flex-shrink-0 mt-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2.5"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Restorative crowns</span>
+              </li>
+              <li class="text-ink-weak flex items-start gap-3">
+                <svg
+                  class="w-5 h-5 text-accent-teal flex-shrink-0 mt-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2.5"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Emergency appointments available</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side Image -->
+      <div class="md:col-span-5">
+        <div class="sticky top-24">
+          <div
+            class="aspect-[4/3] rounded-lg overflow-hidden border-2 border-accent-gold/20"
+          >
+            <Image
+              src={rootCanalImg}
+              alt="Dental tools"
+              title="Photo by Ozkan Guner on Unsplash"
+              widths={[400, 600, 800, 1200]}
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 42vw, 500px"
+              format="webp"
+              quality="high"
+              loading="lazy"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center mt-12">
+      <BookAppointmentButton />
+    </div>
+  </div>
+</MainLayout>
