@@ -21,6 +21,9 @@ const testimonials = [
   { name: m.testimonial_1_name(), text: m.testimonial_1_text() },
   { name: m.testimonial_2_name(), text: m.testimonial_2_text() },
   { name: m.testimonial_3_name(), text: m.testimonial_3_text() },
+  { name: m.testimonial_4_name(), text: m.testimonial_4_text() },
+  { name: m.testimonial_5_name(), text: m.testimonial_5_text() },
+  { name: m.testimonial_6_name(), text: m.testimonial_6_text() },
 ];
 ---
 
@@ -234,114 +237,66 @@ const testimonials = [
   {/* Testimonials Section */}
   <section class="py-16 bg-brand-purple text-white section-breakout">
     <div class="max-w-6xl mx-auto px-4">
-      <h2 class="font-heading text-3xl md:text-4xl font-bold mb-8 text-center">
-        A Legacy of Exceptional Care
-      </h2>
-    </div>
 
-    <div class="px-4">
-      <div id="testimonials-container" class="max-w-2xl mx-auto grid">
-        {
-          testimonials.map((t, index) => (
-            <div
-              class:list={[
-                "testimonial-slide col-start-1 row-start-1 transition-opacity duration-700",
-                index === 0 ? "opacity-100" : "opacity-0",
-              ]}
-              data-index={index}
-            >
-              <Testimonial name={t.name} text={t.text} />
+      {/* Header + Google badge */}
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
+        <h2 class="font-heading text-3xl md:text-4xl font-bold text-center md:text-left">
+          A Legacy of Exceptional Care
+        </h2>
+        <a
+          href="https://g.page/r/CYWRx7nn10h2EAE/review"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex-shrink-0 flex items-center gap-3 bg-white/10 hover:bg-white/20 transition border border-white/20 rounded-xl px-5 py-3"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-7 h-7 flex-shrink-0">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+          </svg>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-bold text-lg leading-none">4.8</span>
+              <div class="flex gap-0.5">
+                {[...Array(5)].map(() => (
+                  <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                ))}
+              </div>
             </div>
-          ))
-        }
+            <div class="text-white/70 text-xs mt-0.5">Google Reviews</div>
+          </div>
+        </a>
       </div>
-    </div>
 
-    <div class="max-w-6xl mx-auto px-4 mt-8">
-      <div class="flex justify-center gap-2">
-        {
-          testimonials.map((_, index) => (
-            <button
-              class:list={[
-                "testimonial-dot w-2 h-2 rounded-full transition-all duration-300",
-                index === 0 ? "bg-white w-6" : "bg-white/40",
-              ]}
-              data-index={index}
-              aria-label={`Go to testimonial ${index + 1}`}
-            />
-          ))
-        }
+      {/* Reviews grid */}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {testimonials.map((t) => (
+          <div class="bg-white/10 border border-white/15 rounded-xl p-6">
+            <Testimonial name={t.name} text={t.text} />
+          </div>
+        ))}
       </div>
+
+      {/* CTA */}
+      <div class="text-center mt-10">
+        <a
+          href="https://g.page/r/CYWRx7nn10h2EAE/review"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 bg-white text-brand-purple px-6 py-3 rounded-md font-semibold hover:bg-white/90 transition"
+        >
+          Leave Us a Review
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+          </svg>
+        </a>
+      </div>
+
     </div>
   </section>
-
-  <script>
-    function setupTestimonialCycle() {
-      const slides = document.querySelectorAll(
-        ".testimonial-slide",
-      ) as NodeListOf<HTMLElement>;
-      const dots = document.querySelectorAll(
-        ".testimonial-dot",
-      ) as NodeListOf<HTMLElement>;
-
-      if (!slides.length || !dots.length) return;
-
-      let currentIndex = 0;
-      let intervalId: number;
-
-      function showSlide(index: number) {
-        currentIndex = index;
-
-        // Update slides
-        slides.forEach((slide, i) => {
-          slide.style.opacity = i === index ? "1" : "0";
-        });
-
-        // Update dots
-        dots.forEach((dot, i) => {
-          if (i === index) {
-            dot.classList.add("bg-white", "w-6");
-            dot.classList.remove("bg-white/40");
-          } else {
-            dot.classList.remove("bg-white", "w-6");
-            dot.classList.add("bg-white/40");
-          }
-        });
-      }
-
-      function nextSlide() {
-        const next = (currentIndex + 1) % slides.length;
-        showSlide(next);
-      }
-
-      // Auto-cycle every 5 seconds
-      function startCycle() {
-        intervalId = window.setInterval(nextSlide, 5000);
-      }
-
-      function resetCycle() {
-        clearInterval(intervalId);
-        startCycle();
-      }
-
-      // Manual navigation via dots
-      dots.forEach((dot, index) => {
-        dot.addEventListener("click", () => {
-          showSlide(index);
-          resetCycle();
-        });
-      });
-
-      // Start the cycle
-      startCycle();
-    }
-
-    // Run on page load
-    setupTestimonialCycle();
-
-    // Re-run if needed for view transitions
-    document.addEventListener("astro:page-load", setupTestimonialCycle);
-  </script>
 
   {/* Google Review CTA Section */}
   <section class="py-16 bg-white section-breakout">
