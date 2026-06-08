@@ -4,62 +4,77 @@ import { getLocale } from "../paraglide/runtime.js";
 import * as m from "../paraglide/messages.js";
 import type { Locale } from "../i18n/locales";
 
-// Force English-only mode - Korean not ready for launch
-// Runtime override handled in locales.ts
-
 const currentLocale = getLocale() as Locale;
 const localePrefix = `/${currentLocale}`;
 
-const navLinks = [
-  { name: m.nav_home(), href: `${localePrefix}/` },
-  { name: m.nav_about(), href: `${localePrefix}/about` },
-  { name: m.nav_services(), href: `${localePrefix}/services` },
-  { name: "Blog", href: `${localePrefix}/blog` },
-  { name: m.nav_contact(), href: `${localePrefix}/contact` },
+interface NavItem {
+  name: string;
+  href: string;
+  children?: NavItem[];
+}
+
+const services: NavItem[] = [
+  { name: "General Dentistry",    href: `${localePrefix}/services/general-dentistry` },
+  { name: "Hygiene & Cleanings",  href: `${localePrefix}/services/hygiene` },
+  { name: "Implant Dentistry",    href: `${localePrefix}/services/implants` },
+  { name: "Root Canal Therapy",   href: `${localePrefix}/services/root-canal-therapy` },
+  { name: "Removable Prosthetics",href: `${localePrefix}/services/removable-prosthetics` },
+  { name: "Emergency Dentistry",  href: `${localePrefix}/services/emergency-dentistry` },
+];
+
+const navLinks: NavItem[] = [
+  { name: m.nav_home(),     href: `${localePrefix}/` },
+  { name: m.nav_about(),    href: `${localePrefix}/about` },
+  { name: m.nav_services(), href: `${localePrefix}/services`, children: services },
+  { name: "Blog",           href: `${localePrefix}/blog` },
+  { name: m.nav_contact(),  href: `${localePrefix}/contact` },
 ];
 ---
 
 <style>
+  /* ── Dropdown ─────────────────────────────────────────────────── */
   .dropdown-parent {
     position: relative;
   }
   .dropdown-caret {
-    margin-left: 0.3em;
-    font-size: 0.8em;
-    vertical-align: middle;
+    margin-left: 0.25em;
+    font-size: 0.75em;
+    display: inline-block;
     transition: transform 0.2s ease;
   }
   .dropdown-menu {
-    min-width: 220px;
-    padding: 0.75rem 0;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    min-width: 230px;
     pointer-events: none;
     opacity: 0;
     transition:
-      opacity 0.2s ease-in-out,
-      transform 0.2s ease-in-out;
-    transform: translateY(10px);
+      opacity 0.18s ease,
+      transform 0.18s ease;
   }
   .dropdown-parent:hover .dropdown-menu,
   .dropdown-parent:focus-within .dropdown-menu {
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
   }
   .dropdown-parent:hover .dropdown-caret {
     transform: rotate(180deg);
   }
-  /* Extend the hoverable area to bridge the gap */
+  /* Bridge gap so menu stays open when moving cursor down */
   .dropdown-parent::after {
     content: "";
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
-    height: 8px;
+    height: 10px;
     pointer-events: auto;
   }
 
-  /* Header scroll behavior */
+  /* ── Header scroll hide/show ──────────────────────────────────── */
   header {
     position: sticky;
     top: 0;
@@ -74,80 +89,104 @@ const navLinks = [
 
 <header class="bg-white shadow-md z-50">
   <div class="mx-auto flex items-center justify-between px-4 py-4 max-w-6xl">
+
+    <!-- Logo -->
     <a
       href={`${localePrefix}/`}
       class="font-heading text-2xl font-bold text-brand-purple whitespace-nowrap mr-4"
-      >Soo B Kim, DDS</a
-    >
+    >Soo B Kim, DDS</a>
 
     <div class="flex items-center gap-4">
-      <!-- Mobile action buttons (icons only) -->
+
+      <!-- Mobile icon buttons -->
       <div class="flex items-center gap-3 md:hidden">
-        <a
-          href={`${localePrefix}/book`}
-          class="text-brand-purple hover:text-accent-teal transition-colors"
-          aria-label="Book Now"
-        >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-            ></path>
+        <a href={`${localePrefix}/book`} class="text-brand-purple hover:text-accent-teal transition-colors" aria-label="Book Now">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
           </svg>
         </a>
-        <a
-          href="tel:+1234567890"
-          class="text-brand-purple hover:text-accent-teal transition-colors"
-          aria-label="Call Us"
-        >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-            ></path>
+        <a href="tel:+12015991888" class="text-brand-purple hover:text-accent-teal transition-colors" aria-label="Call Us">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
           </svg>
         </a>
       </div>
 
-      <button
-        id="menu-toggle"
-        class="md:hidden focus:outline-none text-brand-purple"
-      >
-        <svg
-          class="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16m-7 6h7"></path>
+      <!-- Hamburger -->
+      <button id="menu-toggle" class="md:hidden focus:outline-none text-brand-purple">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
         </svg>
       </button>
 
+      <!-- ── Desktop nav ─────────────────────────────────────────── -->
       <nav id="menu" class="hidden md:flex items-center gap-3 lg:gap-6">
         <ul class="flex space-x-4 lg:space-x-8">
-          {
-            navLinks.map((link) => (
+          {navLinks.map((link) => (
+            link.children ? (
+              /* ── Services dropdown ── */
+              <li class="dropdown-parent">
+                <a
+                  href={link.href}
+                  class="text-gray-800 hover:text-accent-teal transition-colors font-medium inline-flex items-center"
+                >
+                  {link.name}
+                  <span class="dropdown-caret" aria-hidden="true">▾</span>
+                </a>
+
+                <div class="dropdown-menu bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-[100]">
+
+                  {/* "All Services" header link */}
+                  <a
+                    href={link.href}
+                    class="flex items-center justify-between px-4 py-3 text-sm font-semibold text-brand-purple bg-brand-purple/5 hover:bg-brand-purple/10 transition-colors"
+                  >
+                    All Services
+                    <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                    </svg>
+                  </a>
+
+                  <div class="h-px bg-gray-100" />
+
+                  {/* Individual services */}
+                  {link.children.map((child) => (
+                    child.children ? (
+                      /* Implant Dentistry — parent with sub-items */
+                      <div>
+                        <a
+                          href={child.href}
+                          class="block px-4 py-2.5 text-sm font-medium text-gray-800 hover:bg-gray-50 hover:text-brand-purple transition-colors"
+                        >
+                          {child.name}
+                        </a>
+                        {child.children.map((sub) => (
+                          <a
+                            href={sub.href}
+                            class="flex items-center gap-2 px-4 py-1.5 pl-8 text-xs text-ink-weak hover:text-brand-purple hover:bg-gray-50 transition-colors"
+                          >
+                            <span class="w-1 h-px bg-gray-300 flex-shrink-0 inline-block"></span>
+                            {sub.name}
+                          </a>
+                        ))}
+                        <div class="h-px bg-gray-100 mx-4 my-1" />
+                      </div>
+                    ) : (
+                      /* Regular service */
+                      <a
+                        href={child.href}
+                        class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-purple transition-colors"
+                      >
+                        {child.name}
+                      </a>
+                    )
+                  ))}
+                </div>
+              </li>
+            ) : (
+              /* ── Regular nav link ── */
               <li>
                 <a
                   href={link.href}
@@ -156,20 +195,17 @@ const navLinks = [
                   {link.name}
                 </a>
               </li>
-            ))
-          }
+            )
+          ))}
         </ul>
+
         <div class="flex items-center gap-3">
-          <a
-            href={`${localePrefix}/book`}
-            class="bg-accent-teal text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors font-medium whitespace-nowrap"
-          >
+          <a href={`${localePrefix}/book`}
+            class="bg-accent-teal text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors font-medium whitespace-nowrap">
             Book Now
           </a>
-          <a
-            href="tel:+1234567890"
-            class="bg-brand-purple text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors font-medium whitespace-nowrap"
-          >
+          <a href="tel:+12015991888"
+            class="bg-brand-purple text-white px-4 py-2 rounded-md hover:bg-opacity-90 transition-colors font-medium whitespace-nowrap">
             Call Us
           </a>
         </div>
@@ -177,20 +213,49 @@ const navLinks = [
     </div>
   </div>
 
-  <div id="mobile-menu" class="hidden md:hidden">
-    <ul class="flex flex-col space-y-2 p-4 bg-white shadow-md">
-      {
-        navLinks.map((link) => (
-          <li>
-            <a
-              href={link.href}
-              class="text-gray-800 hover:text-accent-teal transition-colors block py-2 font-medium"
-            >
-              {link.name}
-            </a>
-          </li>
-        ))
-      }
+  <!-- ── Mobile menu ─────────────────────────────────────────────── -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100">
+    <ul class="flex flex-col p-4 bg-white shadow-md space-y-1">
+      {navLinks.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class="text-gray-800 hover:text-accent-teal transition-colors block py-2 font-medium"
+          >
+            {link.name}
+          </a>
+
+          {/* Mobile: show service children expanded */}
+          {link.children && (
+            <ul class="mt-1 ml-3 border-l-2 border-brand-purple/20 pl-3 space-y-0.5 mb-2">
+              {link.children.map((child) => (
+                <li>
+                  <a
+                    href={child.href}
+                    class="block py-1.5 text-sm text-gray-600 hover:text-brand-purple transition-colors font-medium"
+                  >
+                    {child.name}
+                  </a>
+                  {child.children && (
+                    <ul class="ml-3 border-l border-gray-200 pl-2 space-y-0.5">
+                      {child.children.map((sub) => (
+                        <li>
+                          <a
+                            href={sub.href}
+                            class="block py-1 text-xs text-ink-weak hover:text-brand-purple transition-colors"
+                          >
+                            ↳ {sub.name}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))}
     </ul>
   </div>
 </header>
@@ -203,36 +268,27 @@ const navLinks = [
     mobileMenu?.classList.toggle("hidden");
   });
 
-  // Header scroll behavior - hide when scrolling down, show when scrolling up
+  // Header scroll behavior — hide on scroll down, show on scroll up
   let lastScrollY = window.scrollY;
   let ticking = false;
-  const scrollThreshold = 10; // Minimum scroll distance to trigger hide/show
-  const hideAfter = 100; // Only start hiding after scrolling this many pixels
-
+  const scrollThreshold = 10;
+  const hideAfter = 100;
   const header = document.querySelector("header") as HTMLElement;
 
   function updateHeaderVisibility() {
     const currentScrollY = window.scrollY;
     const scrollDifference = currentScrollY - lastScrollY;
 
-    // Only update if scroll difference is significant (hysteresis)
-    if (Math.abs(scrollDifference) < scrollThreshold) {
-      ticking = false;
-      return;
-    }
+    if (Math.abs(scrollDifference) < scrollThreshold) { ticking = false; return; }
 
     const scrollingDown = scrollDifference > 0;
     const pastThreshold = currentScrollY > hideAfter;
 
     if (scrollingDown && pastThreshold) {
-      // Scrolling down and past threshold - hide header
       header?.classList.add("header-hidden");
     } else if (!scrollingDown) {
-      // Scrolling up - show header
       header?.classList.remove("header-hidden");
     }
-
-    // If at the very top, always show header
     if (currentScrollY <= hideAfter) {
       header?.classList.remove("header-hidden");
     }
@@ -241,14 +297,10 @@ const navLinks = [
     ticking = false;
   }
 
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateHeaderVisibility);
-        ticking = true;
-      }
-    },
-    { passive: true },
-  );
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateHeaderVisibility);
+      ticking = true;
+    }
+  }, { passive: true });
 </script>
