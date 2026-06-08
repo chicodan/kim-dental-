@@ -1,0 +1,68 @@
+name: Weekly Blog Post
+
+on:
+  # Runs every Monday at 9:00 AM Eastern (14:00 UTC)
+  schedule:
+    - cron: '0 14 * * 1'
+
+  # Allow manual trigger from GitHub Actions UI
+  workflow_dispatch:
+
+jobs:
+  generate-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── 1. Check out the repo ────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 2. Set up Node.js ────────────────────────────────────────────────────
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # ── 3. Install project dependencies ─────────────────────────────────────
+      - name: Install dependencies
+        run: npm install
+
+      # ── 4. Install Anthropic SDK (for the generation script) ─────────────────
+      - name: Install Anthropic SDK
+        run: npm install @anthropic-ai/sdk
+
+      # ── 5. Generate a new blog post ──────────────────────────────────────────
+      - name: Generate blog post
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/generate-blog-post.mjs
+
+      # ── 6. Commit and push the new post ─────────────────────────────────────
+      - name: Commit new post
+        run: |
+          git config --local user.email "blog-bot@sookimdental.com"
+          git config --local user.name "Kim Dental Blog Bot"
+          git add src/content/blog/
+          # Only commit if there's actually a new file
+          if git diff --staged --quiet; then
+            echo "No new post to commit (all topics may be used)."
+          else
+            git commit -m "chore: add weekly blog post [automated]"
+            git push
+          fi
+
+      # ── 7. Build the site ────────────────────────────────────────────────────
+      - name: Build Astro site
+        run: |
+          npx paraglide-js compile --project ./project.inlang --outdir ./src/paraglide
+          npx astro build
+
+      # ── 8. Deploy to Cloudflare Pages ────────────────────────────────────────
+      - name: Deploy to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          npx wrangler pages deploy dist \
+            --project-name kim-dental \
+            --branch main \
+            --account-id d9a0550fb32b07b68e7dad9f9fede6e6

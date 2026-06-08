@@ -1,0 +1,137 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import { getCollection } from "astro:content";
+import { LOCALES, type Locale } from "../../../i18n/locales";
+import { setLocale } from "../../../paraglide/runtime.js";
+
+export async function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+setLocale(lang);
+
+const allPosts = await getCollection("blog");
+const now = new Date();
+const posts = allPosts
+  .filter((p) => p.data.pubDate <= now)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+const tagColors: Record<string, string> = {
+  "root canal": "bg-blue-100 text-blue-700",
+  "implants": "bg-purple-100 text-purple-700",
+  "emergency dentistry": "bg-red-100 text-red-700",
+  "cosmetic dentistry": "bg-pink-100 text-pink-700",
+  "preventive care": "bg-green-100 text-green-700",
+  "patient education": "bg-amber-100 text-amber-700",
+  "Bergen County": "bg-indigo-100 text-indigo-700",
+  "Paramus NJ": "bg-teal-100 text-teal-700",
+};
+
+function tagClass(tag: string) {
+  return tagColors[tag] ?? "bg-gray-100 text-gray-600";
+}
+---
+
+<MainLayout>
+  <!-- Hero -->
+  <section class="section-breakout bg-brand-purple py-16">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+      <p class="text-accent-gold font-medium uppercase tracking-widest text-sm mb-3">
+        From Our Office
+      </p>
+      <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-4">
+        Dental Health Blog
+      </h1>
+      <p class="text-white/80 text-lg max-w-2xl mx-auto">
+        Expert tips, answers to common questions, and helpful guides from Dr. Soo B Kim and the Kim Dental team in Paramus, NJ.
+      </p>
+    </div>
+  </section>
+
+  <!-- Posts Grid -->
+  <section class="py-16">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {
+          posts.map((post) => (
+            <a
+              href={`/${lang}/blog/${post.slug}`}
+              class="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col"
+            >
+              <!-- Card top accent -->
+              <div class="h-1.5 bg-gradient-to-r from-brand-purple to-accent-teal" />
+
+              <div class="p-6 flex flex-col flex-1">
+                <!-- Tags -->
+                <div class="flex flex-wrap gap-2 mb-4">
+                  {post.data.tags.slice(0, 2).map((tag) => (
+                    <span class={`text-xs font-medium px-2.5 py-0.5 rounded-full ${tagClass(tag)}`}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <!-- Title -->
+                <h2 class="font-heading text-xl font-semibold text-brand-purple group-hover:text-accent-teal transition-colors leading-snug mb-3">
+                  {post.data.title}
+                </h2>
+
+                <!-- Description -->
+                <p class="text-gray-600 text-sm leading-relaxed mb-5 flex-1">
+                  {post.data.description}
+                </p>
+
+                <!-- Footer -->
+                <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                  <div class="text-xs text-gray-500">
+                    <span class="font-medium text-gray-700">{post.data.author}</span>
+                    <span class="mx-1">·</span>
+                    {formatDate(post.data.pubDate)}
+                  </div>
+                  <span class="text-accent-teal text-sm font-medium group-hover:translate-x-1 transition-transform inline-block">
+                    Read →
+                  </span>
+                </div>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-breakout bg-gray-50 py-14">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+      <h2 class="font-heading text-2xl font-semibold text-brand-purple mb-3">
+        Have a Question Not Covered Here?
+      </h2>
+      <p class="text-gray-600 mb-6">
+        Give us a call or book an appointment — we love talking to our patients.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href={`/${lang}/book`}
+          class="inline-flex items-center justify-center gap-2 bg-accent-teal text-white px-6 py-3 rounded-lg font-medium hover:bg-opacity-90 transition-colors"
+        >
+          Book an Appointment
+        </a>
+        <a
+          href="tel:+12015991888"
+          class="inline-flex items-center justify-center gap-2 bg-white border border-brand-purple text-brand-purple px-6 py-3 rounded-lg font-medium hover:bg-brand-purple hover:text-white transition-colors"
+        >
+          Call (201) 599-1888
+        </a>
+      </div>
+    </div>
+  </section>
+</MainLayout>

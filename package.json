@@ -18,6 +18,7 @@
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "@anthropic-ai/sdk": "^0.37.0",
     "@astrojs/check": "^0.9.5",
     "@types/node": "^24.1.0",
     "@typescript-eslint/eslint-plugin": "^8.38.0",

@@ -7,6 +7,7 @@ import * as m from "../../paraglide/messages.js";
 import { LOCALES, type Locale } from "../../i18n/locales";
 import { setLocale } from "../../paraglide/runtime.js";
 import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
 import lobby from "../../assets/images/lobby.jpg";
 import roomImage from "../../assets/images/room-horizontal.jpg";
 
@@ -25,6 +26,21 @@ const testimonials = [
   { name: m.testimonial_5_name(), text: m.testimonial_5_text() },
   { name: m.testimonial_6_name(), text: m.testimonial_6_text() },
 ];
+
+const allPosts = await getCollection("blog");
+const now = new Date();
+const latestPosts = allPosts
+  .filter((p) => p.data.pubDate <= now)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+function formatBlogDate(date: Date) {
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
 ---
 
 <MainLayout>
@@ -341,6 +357,53 @@ const testimonials = [
           </svg>
           Leave Us a Review on Google
         </a>
+      </div>
+    </div>
+  </section>
+
+  {/* From the Blog Section */}
+  <section class="py-16 section-breakout bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-10">
+        <div>
+          <p class="text-accent-teal font-medium uppercase tracking-widest text-sm mb-1">Dental Tips & Guides</p>
+          <h2 class="font-heading text-3xl md:text-4xl font-bold text-brand-purple">From the Blog</h2>
+        </div>
+        <a
+          href={`/${lang}/blog`}
+          class="text-brand-purple font-semibold hover:text-accent-teal transition-colors whitespace-nowrap"
+        >
+          View all posts →
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {latestPosts.map((post) => (
+          <a
+            href={`/${lang}/blog/${post.slug}`}
+            class="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col overflow-hidden"
+          >
+            <div class="h-1.5 bg-gradient-to-r from-brand-purple to-accent-teal" />
+            <div class="p-6 flex flex-col flex-1">
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                {post.data.tags.slice(0, 1).map((tag) => (
+                  <span class="text-xs font-medium bg-brand-purple/10 text-brand-purple px-2.5 py-0.5 rounded-full">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <h3 class="font-heading text-lg font-semibold text-brand-purple group-hover:text-accent-teal transition-colors leading-snug mb-3">
+                {post.data.title}
+              </h3>
+              <p class="text-gray-600 text-sm leading-relaxed flex-1 line-clamp-3">
+                {post.data.description}
+              </p>
+              <div class="mt-4 pt-4 border-t border-gray-100 text-xs text-gray-500">
+                {formatBlogDate(post.data.pubDate)}
+              </div>
+            </div>
+          </a>
+        ))}
       </div>
     </div>
   </section>
