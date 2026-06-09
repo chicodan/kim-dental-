@@ -39,6 +39,9 @@ const tagColors: Record<string, string> = {
 function tagClass(tag: string) {
   return tagColors[tag] ?? "bg-gray-100 text-gray-600";
 }
+
+// Collect all unique tags across posts
+const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
 ---
 
 <MainLayout>
@@ -51,21 +54,65 @@ function tagClass(tag: string) {
       <h1 class="font-heading text-4xl md:text-5xl font-bold text-white mb-4">
         Dental Health Blog
       </h1>
-      <p class="text-white/80 text-lg max-w-2xl mx-auto">
+      <p class="text-white/80 text-lg max-w-2xl mx-auto mb-8">
         Expert tips, answers to common questions, and helpful guides from Dr. Soo B Kim and the Kim Dental team in Paramus, NJ.
       </p>
+
+      <!-- Search bar -->
+      <div class="max-w-xl mx-auto relative">
+        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 105 11a6 6 0 0012 0z"/>
+        </svg>
+        <input
+          id="blog-search"
+          type="search"
+          placeholder="Search articles…"
+          autocomplete="off"
+          class="w-full pl-12 pr-4 py-3.5 rounded-xl bg-white text-gray-800 placeholder-gray-400 text-sm shadow-lg focus:outline-none focus:ring-2 focus:ring-accent-teal"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Tag filters -->
+  <section class="section-breakout bg-white border-b border-gray-100 py-4 sticky top-[64px] z-40 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex flex-wrap gap-2 items-center">
+        <span class="text-xs font-semibold text-gray-400 uppercase tracking-widest mr-1 hidden sm:inline">Filter:</span>
+        <button
+          data-tag=""
+          class="tag-btn active px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors bg-brand-purple text-white"
+        >
+          All
+        </button>
+        {allTags.map((tag) => (
+          <button
+            data-tag={tag}
+            class={`tag-btn px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors ${tagClass(tag)} hover:opacity-80`}
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
     </div>
   </section>
 
   <!-- Posts Grid -->
   <section class="py-16">
     <div class="max-w-6xl mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Result count -->
+      <p id="result-count" class="text-sm text-gray-500 mb-6"></p>
+
+      <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {
           posts.map((post) => (
             <a
               href={`/${lang}/blog/${post.slug}`}
-              class="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col"
+              data-title={post.data.title.toLowerCase()}
+              data-description={post.data.description.toLowerCase()}
+              data-tags={post.data.tags.map(t => t.toLowerCase()).join(',')}
+              class="post-card group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col"
             >
               <!-- Card top accent -->
               <div class="h-1.5 bg-gradient-to-r from-brand-purple to-accent-teal" />
@@ -106,6 +153,16 @@ function tagClass(tag: string) {
           ))
         }
       </div>
+
+      <!-- No results -->
+      <div id="no-results" class="hidden text-center py-20">
+        <svg class="w-12 h-12 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-4.35-4.35M17 11A6 6 0 105 11a6 6 0 0012 0z"/>
+        </svg>
+        <p class="text-gray-500 font-medium text-lg mb-1">No articles found</p>
+        <p class="text-gray-400 text-sm">Try a different keyword or clear the filters.</p>
+        <button id="clear-filters" class="mt-4 text-sm text-brand-purple font-medium hover:underline">Clear all filters</button>
+      </div>
     </div>
   </section>
 
@@ -135,3 +192,89 @@ function tagClass(tag: string) {
     </div>
   </section>
 </MainLayout>
+
+<script>
+  const searchInput  = document.getElementById('blog-search')   as HTMLInputElement;
+  const tagBtns      = document.querySelectorAll<HTMLButtonElement>('.tag-btn');
+  const cards        = document.querySelectorAll<HTMLElement>('.post-card');
+  const noResults    = document.getElementById('no-results')    as HTMLElement;
+  const resultCount  = document.getElementById('result-count')  as HTMLElement;
+  const clearBtn     = document.getElementById('clear-filters') as HTMLButtonElement;
+
+  let activeTag = '';
+  let searchQuery = '';
+
+  function filter() {
+    let visible = 0;
+
+    cards.forEach(card => {
+      const title       = card.dataset.title       ?? '';
+      const description = card.dataset.description ?? '';
+      const tags        = card.dataset.tags        ?? '';
+
+      const matchesSearch = !searchQuery ||
+        title.includes(searchQuery) ||
+        description.includes(searchQuery) ||
+        tags.includes(searchQuery);
+
+      const matchesTag = !activeTag ||
+        tags.includes(activeTag.toLowerCase());
+
+      const show = matchesSearch && matchesTag;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    // No-results state
+    noResults.classList.toggle('hidden', visible > 0);
+
+    // Result count (only show when filtering)
+    if (searchQuery || activeTag) {
+      resultCount.textContent = `${visible} article${visible !== 1 ? 's' : ''} found`;
+    } else {
+      resultCount.textContent = '';
+    }
+  }
+
+  // Search input — debounced
+  let debounceTimer: ReturnType<typeof setTimeout>;
+  searchInput.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      searchQuery = searchInput.value.trim().toLowerCase();
+      filter();
+    }, 200);
+  });
+
+  // Tag buttons
+  tagBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeTag = btn.dataset.tag ?? '';
+
+      // Update active styles
+      tagBtns.forEach(b => {
+        const isActive = b.dataset.tag === activeTag;
+        b.classList.toggle('bg-brand-purple', isActive);
+        b.classList.toggle('text-white', isActive);
+        b.classList.toggle('active', isActive);
+      });
+
+      filter();
+    });
+  });
+
+  // Clear all filters
+  function clearAll() {
+    searchInput.value = '';
+    searchQuery = '';
+    activeTag = '';
+    tagBtns.forEach(b => {
+      const isAll = b.dataset.tag === '';
+      b.classList.toggle('bg-brand-purple', isAll);
+      b.classList.toggle('text-white', isAll);
+    });
+    filter();
+  }
+
+  clearBtn?.addEventListener('click', clearAll);
+</script>
