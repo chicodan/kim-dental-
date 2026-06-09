@@ -11,6 +11,7 @@ interface NavItem {
   name: string;
   href: string;
   children?: NavItem[];
+  showParentLink?: boolean;
 }
 
 const services: NavItem[] = [
@@ -22,12 +23,18 @@ const services: NavItem[] = [
   { name: "Emergency Dentistry",  href: `${localePrefix}/services/emergency-dentistry` },
 ];
 
+const patientCenter: NavItem[] = [
+  { name: "What to Expect",   href: `${localePrefix}/patient-center` },
+  { name: "New Patient Form", href: `${localePrefix}/new-patient-form` },
+];
+
 const navLinks: NavItem[] = [
-  { name: m.nav_home(),     href: `${localePrefix}/` },
-  { name: m.nav_about(),    href: `${localePrefix}/about` },
-  { name: m.nav_services(), href: `${localePrefix}/services`, children: services },
-  { name: "Blog",           href: `${localePrefix}/blog` },
-  { name: m.nav_contact(),  href: `${localePrefix}/contact` },
+  { name: m.nav_home(),       href: `${localePrefix}/` },
+  { name: m.nav_about(),      href: `${localePrefix}/about` },
+  { name: m.nav_services(),   href: `${localePrefix}/services`, children: services, showParentLink: true },
+  { name: "Patient Center",   href: `${localePrefix}/patient-center`, children: patientCenter },
+  { name: "Blog",             href: `${localePrefix}/blog` },
+  { name: m.nav_contact(),    href: `${localePrefix}/contact` },
 ];
 ---
 
@@ -93,8 +100,11 @@ const navLinks: NavItem[] = [
     <!-- Logo -->
     <a
       href={`${localePrefix}/`}
-      class="font-heading text-2xl font-bold text-brand-purple whitespace-nowrap mr-4"
-    >Soo B Kim, DDS</a>
+      class="flex flex-col leading-tight mr-4 whitespace-nowrap"
+    >
+      <span class="font-heading text-2xl font-bold text-brand-purple">Soo B Kim, DDS</span>
+      <span class="text-xs font-medium text-gray-500 tracking-wide">Comprehensive &amp; Implant Dentistry</span>
+    </a>
 
     <div class="flex items-center gap-4">
 
@@ -138,18 +148,21 @@ const navLinks: NavItem[] = [
 
                 <div class="dropdown-menu bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-[100]">
 
-                  {/* "All Services" header link */}
-                  <a
-                    href={link.href}
-                    class="flex items-center justify-between px-4 py-3 text-sm font-semibold text-brand-purple bg-brand-purple/5 hover:bg-brand-purple/10 transition-colors"
-                  >
-                    All Services
-                    <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
-                    </svg>
-                  </a>
-
-                  <div class="h-px bg-gray-100" />
+                  {/* Dropdown top header link — only when showParentLink is set */}
+                  {link.showParentLink && (
+                    <>
+                      <a
+                        href={link.href}
+                        class="flex items-center justify-between px-4 py-3 text-sm font-semibold text-brand-purple bg-brand-purple/5 hover:bg-brand-purple/10 transition-colors"
+                      >
+                        {link.name}
+                        <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                        </svg>
+                      </a>
+                      <div class="h-px bg-gray-100" />
+                    </>
+                  )}
 
                   {/* Individual services */}
                   {link.children.map((child) => (
