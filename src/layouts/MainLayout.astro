@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import BackToTop from "../components/BackToTop.astro";
 import { getLocale } from "../paraglide/runtime.js";
 
 // Force English-only mode - Korean not ready for launch
@@ -138,5 +139,6 @@ const dir = "ltr"; // Both English and Korean are left-to-right
       <slot />
     </main>
     <Footer />
+    <BackToTop />
   </body>
 </html>
