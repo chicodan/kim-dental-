@@ -60,12 +60,4 @@ jobs:
           npx paraglide-js compile --project ./project.inlang --outdir ./src/paraglide
           npx astro build
 
-      # ── 8. Deploy to Cloudflare Pages ────────────────────────────────────────
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: d9a0550fb32b07b68e7dad9f9fede6e6
-          projectName: kim-dental
-          directory: dist
-          branch: main
+      # Note: Cloudflare Pages auto-deploys on push to GitHub, no action needed
